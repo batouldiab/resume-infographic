@@ -170,8 +170,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 #galleryModal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
 #galleryModal.open{display:flex}
 .gm-inner{position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:12px}
-.gm-img-wrap{position:relative;width:min(780px,90vw)}
-.gm-img-wrap img{width:100%;max-height:70vh;object-fit:contain;border-radius:12px;display:block;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.gm-img-wrap{position:relative;width:min(620px,80vw,65vh);height:min(620px,80vw,65vh)}
+.gm-img-box{width:100%;height:100%;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.gm-img-box img{width:100%;height:100%;object-fit:cover;display:block}
 .gm-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.6rem;width:42px;height:42px;border-radius:50%;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center}
 .gm-arrow:hover{background:rgba(255,255,255,.3)}
 .gm-prev{left:-52px}.gm-next{right:-52px}
@@ -219,9 +220,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   /* timeline: scroll horizontally so all 9 entries stay legible */
   #tlContainer{overflow-x:auto;-webkit-overflow-scrolling:touch}
   #tlContainer>div{min-width:640px}
-  /* gallery arrows: pull in so they stay on-screen */
-  .gm-prev{left:-32px}
-  .gm-next{right:-32px}
+  /* gallery: smaller square on tablet */
+  .gm-img-wrap{width:min(500px,80vw,65vh);height:min(500px,80vw,65vh)}
+  .gm-prev{left:-36px}
+  .gm-next{right:-36px}
 }
 
 /* ── Small mobile: ≤ 480 px ── */
@@ -240,15 +242,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .ptitle{font-size:.88rem}
   .pbody{font-size:.7rem}
   .pnum{font-size:2rem}
-  /* gallery */
+  /* gallery: compact square on mobile */
   .gm-inner{max-width:98vw}
-  .gm-img-wrap{width:min(98vw,780px)}
-  .gm-prev{left:-24px}
-  .gm-next{right:-24px}
+  .gm-img-wrap{width:min(90vw,400px,65vh);height:min(90vw,400px,65vh)}
+  .gm-prev{left:-28px}
+  .gm-next{right:-28px}
 }
 .gm-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);border:none;cursor:pointer;transition:background .2s}
 .gm-dot.active{background:#ffc93c}
-.gm-close{position:absolute;top:-38px;right:0;background:none;border:none;color:rgba(255,255,255,.7);font-size:1.5rem;cursor:pointer;line-height:1}
+.gm-close{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.45);border:none;color:rgba(255,255,255,.85);font-size:1.3rem;cursor:pointer;line-height:1;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;z-index:2}
 .gm-close:hover{color:#fff}
 a.gallery-link{color:#ffc93c;font-weight:700;font-size:.72rem;text-decoration:none;margin-left:6px;border:1px solid rgba(255,201,60,.4);padding:1px 7px;border-radius:99px;white-space:nowrap;transition:background .2s}
 a.gallery-link:hover{background:rgba(255,201,60,.15)}
@@ -398,14 +400,14 @@ a.gallery-link:hover{background:rgba(255,201,60,.15)}
       </div>
       <span class="acc-card-cta" style="color:var(--teal)">View ›</span>
     </button>
-    <button class="acc-card acc-card-violet" id="btnHobbies" type="button">
+    <a class="acc-card acc-card-violet" href="https://t.me/batouldiabbot" target="_blank" rel="noopener noreferrer" style="text-decoration:none">
       <div class="acc-card-icon">🎨</div>
       <div class="acc-card-text">
         <div class="acc-card-title" style="color:var(--violet)">Hobbies</div>
         <div class="acc-card-sub">Painting · Poetry · Writing</div>
       </div>
-      <span class="acc-card-cta" style="color:var(--violet)">View ›</span>
-    </button>
+      <span class="acc-card-cta" style="color:var(--violet)">View in Telegram ›</span>
+    </a>
   </div>
 </div>
 
@@ -554,7 +556,7 @@ a.gallery-link:hover{background:rgba(255,201,60,.15)}
 
   <div class="pcard" style="background:linear-gradient(135deg,rgba(255,201,60,.07),rgba(255,201,60,.02));border-color:rgba(255,201,60,.35)">
     <div class="pnum" style="color:#ffc93c">03</div>
-    <span class="picon">♀</span>
+    <span class="picon">👩‍💻</span>
     <div class="ptitle" style="color:#ffc93c">Education &amp; Women's Empowerment — AI as a Lever for Humanity <a href="#" class="gallery-link" onclick="openGallery();return false;">[Gallery]</a></div> 
     <div class="pbody">
       Beyond the technical: Batoul teaches <strong>Science, Technology, Engineering, Arts &amp; Mathematics (STEAM) robotics and 3D-printing to children</strong> and trains women and university students in
@@ -734,8 +736,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     {id:11,shape:'rect',  l:'HuggingFace',     rw:52,rh:20, x:658, y:223, c:'#7dd3fc', tip:'Pre-trained transformer models — fine-tuning & embeddings.'},
     {id:24,shape:'rect',  l:'React / Next.js', rw:58,rh:20, x:658, y:313, c:'#ff5f6d', tip:'ReactJS dashboards + Next.js RAG chatbot frontend.'},
     {id:19,shape:'rect',  l:'FastAPI / Flask', rw:58,rh:20, x:658, y:370, c:'#c4b5fd', tip:'Python REST API frameworks for serving ML models in production.'},
-    {id:13,shape:'rect',  l:'Gemini & Fanar',  rw:60,rh:20, x:792, y:143, c:'#7dd3fc', tip:'Gemini (Google) + Fanar (Arabic LLM) — multilingual NLP at UN ESCWA.'},
-    {id:12,shape:'rect',  l:'GPT-4 / OpenAI',  rw:60,rh:20, x:792, y:193, c:'#7dd3fc', tip:'GPT-4 API integrated into production RAG pipeline.'},
+    {id:13,shape:'rect',  l:'GPT / Gemini / Fanar',  rw:74,rh:20, x:792, y:168, c:'#7dd3fc', tip:'GPT (OpenAI) integrated into production RAG pipeline; Gemini (Google) + Fanar (Arabic LLM) — multilingual NLP at UN ESCWA.'},
     {id:25,shape:'rect',  l:'TypeScript',      rw:50,rh:20, x:792, y:263, c:'#fca5a5', tip:'Strongly-typed JS — GOVA Group backend services.'},
     {id:17,shape:'rect',  l:'CI / CD',         rw:34,rh:20, x:792, y:318, c:'#c4b5fd', tip:'Continuous Integration/Deployment via GitHub Actions.'},
     {id:15,shape:'rect',  l:'MLflow',          rw:38,rh:20, x:200, y:423, c:'#c4b5fd', tip:'Experiment tracking, model versioning, deployment lifecycle.'},
@@ -745,10 +746,10 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   const links=[
     [0,1],[0,7],[0,14],[0,20],[0,23],[0,10],
     [1,2],[1,3],[1,4],[1,5],[1,6],[1,20],[1,14],
-    [7,8],[7,9],[7,10],[7,23],[8,9],[8,10],[8,13],[9,10],[10,11],[10,12],[10,13],
+    [7,8],[7,9],[7,10],[7,23],[8,9],[8,10],[8,13],[9,10],[10,11],[10,13],
     [14,15],[14,16],[14,17],[14,18],[16,17],[16,19],[17,19],
     [20,21],[20,22],[20,7],[20,5],
-    [24,25],[24,16],[24,19],[25,12],[23,20],[23,7],[5,3],
+    [24,25],[24,16],[24,19],[25,13],[23,20],[23,7],[5,3],
   ];
 
   const nodeMap={};nodes.forEach(n=>nodeMap[n.id]=n);
@@ -901,7 +902,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   let h=`<div style="position:relative"><div style="height:3px;background:linear-gradient(90deg,${gc});border-radius:2px;position:relative">`;
   jobs.forEach((j,i)=>{
     const pct=(i/(jobs.length-1)*100).toFixed(1);
-    h+=`<div data-tip="${j.tip.replace(/"/g,'&quot;')}" data-label="${j.role} · ${j.org}" data-c="${j.c}" style="position:absolute;left:${pct}%;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:${j.c};border:2px solid #04080f;box-shadow:0 0 6px ${j.c};cursor:help"></div>`;
+    h+=`<div data-tip="${j.tip.replace(/"/g,'&quot;')}" data-label="${j.role} · ${j.org}" data-c="${j.c}" style="position:absolute;left:${pct}%;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:${j.c};border:2px solid #04080f;box-shadow:0 0 6px ${j.c};cursor:default"></div>`;
   });
   h+=`</div><div style="display:grid;grid-template-columns:repeat(${jobs.length},1fr);gap:0;margin-top:7px">`;
   jobs.forEach((j,i)=>{
@@ -1036,6 +1037,16 @@ function openAccModal(type) {
       var row = document.createElement('div');
       row.className = 'acc-item';
       row.innerHTML = '<div class="acc-dot" style="color:' + it.dot + ';background:' + it.dot + '"></div><span>' + it.html + '</span>';
+      var hrefMatch = it.html.match(/href="([^"]+)"/);
+      if (hrefMatch) {
+        row.style.cursor = 'pointer';
+        row.classList.add('acc-item-link');
+        (function(url) {
+          row.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A') window.open(url, '_blank', 'noopener,noreferrer');
+          });
+        })(hrefMatch[1]);
+      }
       body.appendChild(row);
     });
   }
@@ -1050,7 +1061,7 @@ function closeAccModal() {
 <div id="galleryModal" role="dialog" aria-modal="true" aria-label="Teaching Gallery">
   <div class="gm-inner">
     <div class="gm-img-wrap">
-      <img id="galImg" src="teaching1.jpg" alt="Teaching photo">
+      <div class="gm-img-box"><img id="galImg" src="teaching1.jpg" alt="Teaching photo"></div>
       <button class="gm-arrow gm-prev" onclick="galPrev()" aria-label="Previous">&#8249;</button>
       <button class="gm-arrow gm-next" onclick="galNext()" aria-label="Next">&#8250;</button>
       <button class="gm-close" onclick="closeGallery()" aria-label="Close">&#10005;</button>
@@ -1067,7 +1078,6 @@ function closeAccModal() {
 document.getElementById('galleryModal').addEventListener('click',function(e){if(e.target===this)closeGallery();});
 // Section modal wiring
 document.getElementById('btnVol').addEventListener('click', function() { openAccModal('vol'); });
-document.getElementById('btnHobbies').addEventListener('click', function() { openAccModal('hobbies'); });
 document.getElementById('accModal').addEventListener('click', function(e) { if(e.target===this) closeAccModal(); });
 document.addEventListener('keydown', function(e) {
   if(e.key==='Escape' && document.getElementById('accModal').classList.contains('open')) closeAccModal();

@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batoul Diab — 3D Skill Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0b1120;--panel:#0d1526;--card:#111b2e;--border:#1a2d4a;
+  --gold:#ffc93c;--teal:#00d4aa;--violet:#a78bfa;--sky:#38bdf8;
+  --orange:#fb923c;--lime:#86efac;--coral:#ff5f6d;--pink:#fca5a5;
+  --text:#c8d8e8;--muted:#4a6580;--white:#e8f4ff;
+}
+html,body{width:100%;min-height:100vh;background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,212,170,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.014) 1px,transparent 1px);
+  background-size:52px 52px}
+.page{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:20px 18px 48px}
+
+/* ─── LOADER ─── */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  transition:opacity .6s ease}
+#loader.fade{opacity:0;pointer-events:none}
+.loader-ring{width:56px;height:56px;border:2px solid var(--border);border-top-color:var(--gold);
+  border-radius:50%;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-text{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted);letter-spacing:.12em}
+
+/* ─── HEADER ─── */
+.hdr{display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+  padding:20px 28px;background:var(--panel);border:1px solid var(--border);
+  border-top:3px solid var(--gold);border-radius:14px;margin-bottom:16px;
+  box-shadow:0 0 50px rgba(255,201,60,.05)}
+.hdr-name{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
+  color:var(--white);line-height:1.1;letter-spacing:-.02em}
+.hdr-name em{color:var(--gold);font-style:normal}
+.hdr-role{font-size:.75rem;color:var(--muted);margin-top:5px;letter-spacing:.04em}
+.hdr-role strong{color:var(--teal)}
+.hdr-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.htag{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:99px;
+  font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;border:1px solid}
+.htag-gold{background:rgba(255,201,60,.07);border-color:rgba(255,201,60,.28);color:var(--gold)}
+.htag-teal{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.28);color:var(--teal)}
+.htag-violet{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.28);color:var(--violet)}
+.htag-sky{background:rgba(56,189,248,.07);border-color:rgba(56,189,248,.28);color:var(--sky)}
+.hdr-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.hdr-stat-row{display:flex;gap:12px}
+.hstat{text-align:center;padding:8px 14px;border-radius:9px;background:var(--card);border:1px solid var(--border)}
+.hstat .n{font-family:'DM Mono',monospace;font-size:1.35rem;font-weight:500;color:var(--gold);line-height:1}
+.hstat .l{font-size:.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+/* ─── AXIS INFO ─── */
+.axis-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.axis-card{padding:13px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:14px}
+.ax-letter{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:500;
+  flex-shrink:0;line-height:1;margin-top:2px}
+.ax-body strong{display:block;font-size:.72rem;color:var(--white);margin-bottom:4px}
+.ax-body span{font-size:.64rem;color:var(--muted);line-height:1.6}
+
+/* ─── KEY PROJECT CARDS ─── */
+.proj-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.proj-card{padding:14px 16px;border-radius:11px;background:var(--card);border:1px solid var(--border);
+  border-left:3px solid;position:relative;overflow:hidden;
+  transition:box-shadow .2s,border-color .2s}
+.proj-card:hover{box-shadow:0 0 22px rgba(var(--pcr),.2)}
+.proj-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(var(--pcr),.04) 0%,transparent 60%);pointer-events:none}
+.proj-icon{font-size:1.3rem;margin-bottom:6px}
+.proj-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;
+  color:var(--white);margin-bottom:5px}
+.proj-sub{font-size:.62rem;color:var(--muted);line-height:1.55;margin-bottom:7px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:4px}
+.ptag{font-size:.55rem;padding:2px 7px;border-radius:99px;border:1px solid;font-weight:600;
+  background:rgba(var(--pcr),.07);border-color:rgba(var(--pcr),.3);color:var(--pc)}
+
+/* ─── CATEGORY GRID ─── */
+.cat-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px}
+.cat-card{padding:10px 12px;border-radius:9px;background:var(--card);border:1px solid var(--border);
+  transition:border-color .2s,box-shadow .2s;cursor:default}
+.cat-card:hover{border-color:var(--cc);box-shadow:0 0 14px rgba(var(--cr),.18)}
+.cat-top{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.cat-dot{width:9px;height:9px;border-radius:50%;background:var(--cc);flex-shrink:0}
+.cat-name{font-size:.63rem;font-weight:700;color:var(--white)}
+.cat-items{font-size:.56rem;color:var(--muted);line-height:1.6}
+
+/* ─── 3D CANVAS ─── */
+.canvas-wrap{position:relative;
+  background:radial-gradient(ellipse at 40% 40%,#0a1526 0%,#04080f 65%);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  height:660px;margin-bottom:14px;
+  box-shadow:0 0 80px rgba(0,0,0,.7),inset 0 0 100px rgba(0,0,0,.4)}
+#threeCanvas{width:100%;height:100%;display:block;touch-action:none}
+
+/* Controls bar */
+.ctrl-bar{position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:7px;z-index:20;
+  background:rgba(11,17,32,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:99px;padding:6px 14px}
+.cbtn{background:none;border:1px solid var(--border);color:var(--muted);
+  font-size:.62rem;font-family:'DM Sans',sans-serif;font-weight:600;
+  padding:4px 13px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cbtn:hover,.cbtn.on{background:rgba(255,201,60,.1);border-color:var(--gold);color:var(--gold)}
+.cbtn.rot-on{background:rgba(0,212,170,.1);border-color:var(--teal);color:var(--teal)}
+
+/* Axis overlays on canvas */
+.ax-ov{position:absolute;pointer-events:none;z-index:10;
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;
+  opacity:.65;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
+/* ─── TOOLTIP ─── */
+#tt{position:fixed;z-index:9999;pointer-events:none;
+  max-width:290px;padding:12px 16px;border-radius:12px;
+  background:rgba(4,8,15,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--border);
+  box-shadow:0 12px 44px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04);
+  opacity:0;transform:translateY(8px) scale(.96);
+  transition:opacity .16s,transform .16s}
+#tt.vis{opacity:1;transform:translateY(0) scale(1)}
+.tt-name{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;
+  margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.tt-desc{font-size:.67rem;color:var(--muted);line-height:1.65}
+.tt-badge{display:inline-block;margin-top:8px;font-size:.55rem;font-weight:600;
+  padding:2px 9px;border-radius:99px;border:1px solid;font-family:'DM Mono',monospace}
+.tt-coords{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);
+  margin-top:5px;opacity:.7}
+
+/* ─── LEGEND ─── */
+.legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  padding:14px 20px;background:var(--panel);border:1px solid var(--border);border-radius:10px}
+.leg-ttl{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-right:6px;flex-shrink:0}
+.li{display:flex;align-items:center;gap:6px;font-size:.62rem;color:var(--text);white-space:nowrap}
+.li-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;box-shadow:0 0 5px currentColor}
+.li-box{width:11px;height:7px;border-radius:2px;flex-shrink:0}
+.li-line{width:22px;height:1.5px;flex-shrink:0;border-radius:1px}
+.li-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;margin:0 2px}
+.leg-hint{font-size:.59rem;color:var(--muted);margin-left:auto;text-align:right;line-height:1.6}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){.cat-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){
+  .axis-row,.proj-row{grid-template-columns:1fr}
+  .cat-row{grid-template-columns:repeat(2,1fr)}
+  .canvas-wrap{height:480px}
+  .hdr-right{display:none}
+}
+/* ─── MODAL EMBED MODE ─── */
+body.modal-mode #loader{display:none}
+body.modal-mode .hdr,
+body.modal-mode .axis-row,
+body.modal-mode .proj-row,
+body.modal-mode .cat-row{display:none}
+body.modal-mode .page{padding:0;max-width:100%}
+body.modal-mode .canvas-wrap{height:calc(100vh - 56px);border-radius:0;border:none;margin-bottom:0}
+body.modal-mode .legend{border-radius:0;border-left:none;border-right:none;border-bottom:none}
+body.modal-mode body{overflow:hidden}
+</style>
+</head>
+<body>
+
+<script>if(location.hash==='#modal')document.body.classList.add('modal-mode');</script>
+
+<!-- LOADING -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">INITIALISING 3D SKILL UNIVERSE…</div>
+</div>
+
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="hdr">
+    <div>
+      <div class="hdr-name">Batoul <em>Diab</em></div>
+      <div class="hdr-role"><strong>3D Skill Universe</strong> — AI/ML Data Engineering Scientist · Beirut, Lebanon</div>
+      <div class="hdr-tags">
+        <span class="htag htag-gold">◈ 25 Skill Nodes</span>
+        <span class="htag htag-teal">⬡ 39 Connections</span>
+        <span class="htag htag-violet">⬡ 3 Semantic Axes</span>
+        <span class="htag htag-sky">◆ 5 Bridge Animations</span>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-stat-row">
+        <div class="hstat"><div class="n">3</div><div class="l">Domains</div></div>
+        <div class="hstat"><div class="n">6</div><div class="l">Categories</div></div>
+        <div class="hstat"><div class="n">25</div><div class="l">Nodes</div></div>
+        <div class="hstat"><div class="n">39</div><div class="l">Links</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ AXIS SEMANTICS ═══ -->
+  <div class="axis-row">
+    <div class="axis-card">
+      <div class="ax-letter" style="color:#ff6b6b">X</div>
+      <div class="ax-body">
+        <strong>Abstraction Layer</strong>
+        <span>← Data &amp; ML Frameworks &nbsp;|&nbsp; AI Intelligence &amp; Applications →<br>
+        Raw tools sit left; production interfaces sit right.</span>
+      </div>
+    </div>
+    <div class="axis-card">
+      <div class="ax-letter" style="color:#4ade80">Y</div>
+      <div class="ax-body">
+        <strong>Domain Orientation</strong>
+        <span>↓ Infrastructure &amp; Production &nbsp;|&nbsp; Research &amp; Intelligence ↑<br>
+        MLOps/cloud sink down; NLP/AI/GNN rise up.</span>
+      </div>
+    </div>
+    <div class="axis-card">
+      <div class="ax-letter" style="color:#60a5fa">Z</div>
+      <div class="ax-body">
+        <strong>Specialisation Depth</strong>
+        <span>← General &amp; Foundational &nbsp;|&nbsp; Specialised &amp; Frontier →<br>
+        Core languages near origin; cutting-edge tools extend deeper.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ KEY PROJECTS ═══ -->
+  <div class="proj-row">
+    <div class="proj-card" style="border-left-color:#a78bfa;--pc:#a78bfa;--pcr:167,139,250">
+      <div class="proj-icon">🧠</div>
+      <div class="proj-title">AI × Health</div>
+      <div class="proj-sub">Brain Age Prediction — Master's Thesis · Tarbiat Modares University.<br>Multi-atlas ensemble fusing GCNs with fMRI regression to predict biological brain age.</div>
+      <div class="proj-tags">
+        <span class="ptag">GNN/GCN</span><span class="ptag">TensorFlow</span><span class="ptag">PyTorch</span><span class="ptag">NLP</span>
+      </div>
+    </div>
+    <div class="proj-card" style="border-left-color:#ffc93c;--pc:#ffc93c;--pcr:255,201,60">
+      <div class="proj-icon">🌍</div>
+      <div class="proj-title">AI × Society</div>
+      <div class="proj-sub">UN ESCWA — Geo-AI Pipelines for Policy.<br>End-to-end pipelines processing 100s of TB of fragmented human capital data.</div>
+      <div class="proj-tags">
+        <span class="ptag">Data Eng</span><span class="ptag">LLMs</span><span class="ptag">GIS/GEE</span><span class="ptag">GNN/GCN</span>
+      </div>
+    </div>
+    <div class="proj-card" style="border-left-color:#38bdf8;--pc:#38bdf8;--pcr:56,189,248">
+      <div class="proj-icon">⚙️</div>
+      <div class="proj-title">AI × Deployment</div>
+      <div class="proj-sub">Production MLOps + RAG Chatbot + Full-Stack.<br>Full production MLOps (MLflow, DVC, AWS, CI/CD) and a Next.js + LangChain RAG system.</div>
+      <div class="proj-tags">
+        <span class="ptag">RAG</span><span class="ptag">MLOps</span><span class="ptag">AWS</span><span class="ptag">React/Next.js</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CATEGORY CARDS ═══ -->
+  <div class="cat-row">
+    <div class="cat-card" style="--cc:#00d4aa;--cr:0,212,170">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">Hub / Core</div></div>
+      <div class="cat-items">BATOUL DIAB · Python</div>
+    </div>
+    <div class="cat-card" style="--cc:#86efac;--cr:134,239,172">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">ML Frameworks</div></div>
+      <div class="cat-items">TensorFlow · PyTorch · Keras · scikit-learn · GNN/GCN</div>
+    </div>
+    <div class="cat-card" style="--cc:#38bdf8;--cr:56,189,248">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">NLP / AI Layer</div></div>
+      <div class="cat-items">NLP · LLMs · RAG · LangChain · HuggingFace · GPT/Gemini/Fanar</div>
+    </div>
+    <div class="cat-card" style="--cc:#ffc93c;--cr:255,201,60">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">Data Engineering</div></div>
+      <div class="cat-items">Data Eng · Polars/Pandas · SQL/MongoDB</div>
+    </div>
+    <div class="cat-card" style="--cc:#a78bfa;--cr:167,139,250">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">MLOps / Infra</div></div>
+      <div class="cat-items">MLOps · AWS · CI/CD · MLflow · DVC · FastAPI/Flask</div>
+    </div>
+    <div class="cat-card" style="--cc:#ff5f6d;--cr:255,95,109">
+      <div class="cat-top"><div class="cat-dot"></div><div class="cat-name">Application Layer</div></div>
+      <div class="cat-items">React/Next.js · TypeScript · GIS/GEE</div>
+    </div>
+  </div>
+
+  <!-- ═══ 3D CANVAS ═══ -->
+  <div class="canvas-wrap">
+    <canvas id="threeCanvas"></canvas>
+
+    <!-- Controls bar -->
+    <div class="ctrl-bar">
+      <button class="cbtn" id="btnTop">Top</button>
+      <button class="cbtn" id="btnSide">Side</button>
+      <button class="cbtn" id="btnFront">Front</button>
+      <button class="cbtn" id="btnReset">Reset</button>
+      <button class="cbtn" id="btnRotate">⟳ Auto-Rotate</button>
+      <button class="cbtn" id="btnZoomIn"  title="Zoom In">＋</button>
+      <button class="cbtn" id="btnZoomOut" title="Zoom Out">－</button>
+    </div>
+
+    <!-- Axis overlays -->
+    <div class="ax-ov" style="bottom:14px;left:50%;transform:translateX(-50%);color:#ff6b6b80">← X: Frameworks &nbsp;·&nbsp; Applications →</div>
+    <div class="ax-ov" style="left:12px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center;color:#4ade8080">↓ Infra &nbsp;·&nbsp; Y &nbsp;·&nbsp; Research ↑</div>
+    <div class="ax-ov" style="bottom:14px;right:14px;color:#60a5fa80">Z: Foundation → Frontier</div>
+  </div>
+
+  <!-- TOOLTIP -->
+  <div id="tt">
+    <div class="tt-name" id="tt-name">—</div>
+    <div class="tt-desc" id="tt-desc">—</div>
+    <div class="tt-badge" id="tt-badge">Category</div>
+    <div class="tt-coords" id="tt-coords">x · y · z</div>
+  </div>
+
+  <!-- ═══ LEGEND ═══ -->
+  <div class="legend">
+    <span class="leg-ttl">Legend</span>
+    <div class="li"><div class="li-dot" style="color:#00d4aa;background:#00d4aa"></div>Hub / Core</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#86efac;background:#86efac"></div>ML Frameworks</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#38bdf8;background:#38bdf8"></div>NLP / AI</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#ffc93c;background:#ffc93c"></div>Data Eng</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#a78bfa;background:#a78bfa"></div>MLOps / Infra</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#ff5f6d;background:#ff5f6d"></div>Applications</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-dot" style="color:#fb923c;background:#fb923c"></div>GIS / Geo</div>
+    <div class="li-sep"></div>
+    <div class="li"><div class="li-line" style="background:rgba(0,212,170,.5)"></div>Hub edge</div>
+    <div class="li"><div class="li-line" style="background:rgba(255,255,255,.2);border-top:1px dashed rgba(255,255,255,.2);height:0"></div>Connection</div>
+    <div class="li"><div class="li-line" style="background:#fb923c"></div>Bridge edge</div>
+    <div class="li-sep"></div>
+    <div class="li" style="color:var(--teal)">● Pulse = Key Hubs</div>
+    <div class="li" style="color:var(--orange)">◆ Particles = Cross-axis bridges</div>
+    <div class="li-sep"></div>
+    <span class="leg-hint">Drag to rotate &nbsp;·&nbsp; Hover nodes for details</span>
+  </div>
+
+</div><!-- /page -->
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════════════ */
+const NODES = [
+  // Hub
+  {id:0,  label:'BATOUL\nDIAB',        shape:'sphere', r:0.72, x: 0.0,  y: 0.0,  z: 0.0,  color:'#00d4aa', hub:true,  cat:'Hub / Core',       tip:'AI/ML Data Engineering Scientist · Beirut, Lebanon'},
+  {id:1,  label:'Python',              shape:'sphere', r:0.50, x:-1.5,  y: 0.5,  z:-1.0,  color:'#00d4aa',           cat:'Hub / Core',       tip:'Primary language: ML pipelines, REST APIs, data engineering, backend.'},
+  // ML Frameworks
+  {id:2,  label:'TensorFlow',          shape:'box',    r:0.46, x:-2.5,  y: 1.5,  z:-0.5,  color:'#86efac',           cat:'ML Frameworks',    tip:'Deep learning framework — brain age & bioinformatics models.'},
+  {id:3,  label:'PyTorch',             shape:'box',    r:0.43, x:-2.5,  y: 2.0,  z: 0.5,  color:'#86efac',           cat:'ML Frameworks',    tip:'Custom neural network architectures and research experimentation.'},
+  {id:4,  label:'scikit-learn',        shape:'box',    r:0.46, x:-2.0,  y:-0.5,  z:-1.5,  color:'#86efac',           cat:'ML Frameworks',    tip:'Classical ML: regression, classification, clustering, evaluation.'},
+  {id:5,  label:'GNN / GCN',           shape:'box',    r:0.44, x:-2.5,  y: 2.5,  z: 1.0,  color:'#86efac',           cat:'ML Frameworks',    tip:'Graph Neural Networks + GCNs — brain age (fMRI) & UN labour forecasting.'},
+  {id:6,  label:'Keras',               shape:'box',    r:0.38, x:-2.0,  y: 1.5,  z:-1.5,  color:'#86efac',           cat:'ML Frameworks',    tip:'High-level neural network API — rapid model prototyping.'},
+  // NLP / AI
+  {id:7,  label:'NLP',                 shape:'sphere', r:0.50, x: 1.5,  y: 2.5,  z: 0.5,  color:'#38bdf8',           cat:'NLP / AI Layer',   tip:'Natural Language Processing — classification, skills extraction, sentiment analysis.'},
+  {id:8,  label:'LLMs',                shape:'sphere', r:0.47, x: 2.5,  y: 3.0,  z: 1.0,  color:'#38bdf8',           cat:'NLP / AI Layer',   tip:'Large Language Models — core of UN pipelines and chatbot.'},
+  {id:9,  label:'LangChain',           shape:'box',    r:0.43, x: 2.5,  y: 2.0,  z: 2.0,  color:'#7dd3fc',           cat:'NLP / AI Layer',   tip:'LLM orchestration framework — production RAG chatbot architecture.'},
+  {id:10, label:'RAG',                 shape:'sphere', r:0.44, x: 3.0,  y: 1.5,  z: 2.5,  color:'#38bdf8',           cat:'NLP / AI Layer',   tip:'Retrieval-Augmented Generation — Next.js + LangChain + OpenAI production chatbot.'},
+  {id:11, label:'HuggingFace',         shape:'box',    r:0.44, x: 2.0,  y: 2.5,  z: 2.0,  color:'#7dd3fc',           cat:'NLP / AI Layer',   tip:'Pre-trained transformer models — fine-tuning & embeddings.'},
+  {id:13, label:'GPT/Gemini\n/Fanar',  shape:'box',    r:0.56, x: 3.5,  y: 3.0,  z: 3.0,  color:'#7dd3fc',           cat:'NLP / AI Layer',   tip:'GPT (OpenAI) integrated into production RAG; Gemini (Google) + Fanar (Arabic LLM) — multilingual NLP at UN ESCWA.'},
+  // Data Engineering
+  {id:20, label:'Data\nEng',           shape:'sphere', r:0.47, x:-2.0,  y: 1.0,  z:-2.0,  color:'#ffc93c',           cat:'Data Engineering', tip:'100s of TB fragmented human capital data — cleaned, structured, mart-ready.'},
+  {id:21, label:'Polars/\nPandas',     shape:'box',    r:0.46, x:-3.0,  y: 0.0,  z:-2.0,  color:'#fde68a',           cat:'Data Engineering', tip:'High-performance Python dataframe libraries for large-scale pipelines.'},
+  {id:22, label:'SQL/\nMongoDB',       shape:'box',    r:0.46, x:-3.0,  y:-0.5,  z:-1.5,  color:'#fde68a',           cat:'Data Engineering', tip:'Relational (SQL/MySQL/SQLite) and NoSQL (MongoDB) data modelling.'},
+  // MLOps / Infra
+  {id:14, label:'MLOps',               shape:'sphere', r:0.46, x: 1.0,  y:-2.0,  z: 0.0,  color:'#a78bfa',           cat:'MLOps / Infra',    tip:'End-to-end production ML pipeline management.'},
+  {id:15, label:'MLflow',              shape:'box',    r:0.38, x: 0.5,  y:-2.5,  z:-0.5,  color:'#c4b5fd',           cat:'MLOps / Infra',    tip:'Experiment tracking, model versioning, deployment lifecycle.'},
+  {id:16, label:'AWS',                 shape:'sphere', r:0.43, x: 2.0,  y:-2.5,  z: 1.0,  color:'#a78bfa',           cat:'MLOps / Infra',    tip:'Amazon Web Services: EC2, S3, ECR, IAM — cloud-native ML deployment.'},
+  {id:17, label:'CI / CD',             shape:'box',    r:0.38, x: 1.5,  y:-3.0,  z: 0.5,  color:'#c4b5fd',           cat:'MLOps / Infra',    tip:'Continuous Integration/Deployment via GitHub Actions.'},
+  {id:18, label:'DVC',                 shape:'box',    r:0.34, x: 1.5,  y:-2.0,  z: 2.0,  color:'#c4b5fd',           cat:'MLOps / Infra',    tip:'Data Version Control — tracks datasets & models like Git.'},
+  {id:19, label:'FastAPI/\nFlask',     shape:'box',    r:0.44, x: 2.5,  y:-1.5,  z: 1.5,  color:'#c4b5fd',           cat:'MLOps / Infra',    tip:'Python REST API frameworks for serving ML models in production.'},
+  // Application Layer
+  {id:23, label:'GIS/GEE',             shape:'sphere', r:0.40, x: 0.0,  y: 2.5,  z: 2.0,  color:'#fb923c',           cat:'Application Layer',tip:'Google Earth Engine — geospatial ETL, city-scale dashboards for UN ESCWA.'},
+  {id:24, label:'React/\nNext.js',     shape:'box',    r:0.46, x: 3.5,  y:-0.5,  z: 2.0,  color:'#ff5f6d',           cat:'Application Layer',tip:'ReactJS dashboards + Next.js RAG chatbot frontend.'},
+  {id:25, label:'TypeScript',          shape:'box',    r:0.42, x: 4.0,  y:-1.0,  z: 2.5,  color:'#fca5a5',           cat:'Application Layer',tip:'Strongly-typed JS — GOVA Group backend services.'},
+];
+
+const LINKS = [
+  [0,1],[0,7],[0,14],[0,20],[0,23],[0,10],
+  [1,2],[1,3],[1,4],[1,5],[1,6],[1,20],[1,14],
+  [7,8],[7,9],[7,10],[7,23],[8,9],[8,10],[8,13],[9,10],[10,11],[10,13],
+  [14,15],[14,16],[14,17],[14,18],[16,17],[16,19],[17,19],
+  [20,21],[20,22],[20,7],[20,5],
+  [24,25],[24,16],[24,19],[25,13],[23,20],[23,7],[5,3],
+];
+
+// Cross-dimensional bridges: data↔intelligence, foundation↔frontier
+const BRIDGES = [[20,7],[5,8],[1,10],[14,16],[23,20]];
+const BRIDGE_SET = new Set(BRIDGES.map(([a,b])=>`${Math.min(a,b)}-${Math.max(a,b)}`));
+
+// Pulsing hubs
+const HUB_IDS = new Set([0,1,7,8,20,14]);
+
+/* ═══════════════════════════════════════════════════
+   SCENE SETUP
+   ═══════════════════════════════════════════════════ */
+const canvas = document.getElementById('threeCanvas');
+const wrap   = canvas.parentElement;
+
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setClearColor(0x000000,0);
+
+const scene  = new THREE.Scene();
+scene.fog    = new THREE.FogExp2(0x04080f, 0.032);
+
+const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 200);
+camera.position.set(7.5, 5, 9.5);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance   = 3;
+controls.maxDistance   = 32;
+controls.autoRotate    = false;
+controls.autoRotateSpeed = 0.45;
+
+/* ─── LIGHTS ─── */
+scene.add(new THREE.AmbientLight(0x182040, 1.5));
+
+const dLight1 = new THREE.DirectionalLight(0x00d4aa, 0.9);
+dLight1.position.set(6, 10, 6); scene.add(dLight1);
+
+const dLight2 = new THREE.DirectionalLight(0xffc93c, 0.45);
+dLight2.position.set(-6, 4, -6); scene.add(dLight2);
+
+const pLight  = new THREE.PointLight(0x38bdf8, 0.7, 22);
+pLight.position.set(3, 3, 3); scene.add(pLight);
+
+/* ─── GRID + AXES ─── */
+const grid = new THREE.GridHelper(16, 16, 0x1a2d4a, 0x0d1f35);
+grid.position.y = -4.2; scene.add(grid);
+
+
+/* ═══════════════════════════════════════════════════
+   POSITION-BASED UNIQUE COLOURS
+   ═══════════════════════════════════════════════════ */
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => { const k = (n + h / 30) % 12; return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1); };
+  const hex = x => Math.round(x * 255).toString(16).padStart(2, '0');
+  return `#${hex(f(0))}${hex(f(8))}${hex(f(4))}`;
+}
+
+(function assignPositionColors() {
+  // X: -3→4  Y: -3→3  Z: -2→3
+  const yMin = -3, yMax = 3;
+  NODES.forEach(n => {
+    // Primary hue: angle around the Y-axis (XZ plane) → 0-360°
+    const hue = ((Math.atan2(n.z, n.x) * 180 / Math.PI) + 360) % 360;
+    // Slight Y nudge so nodes at same XZ angle still differ
+    const hueShifted = (hue + (n.y * 12) + 360) % 360;
+    // Lightness: higher nodes (research) lighter, lower nodes (infra) darker
+    const normY = (n.y - yMin) / (yMax - yMin);
+    const lightness = 44 + normY * 30;  // 44 % → 74 %
+    // Saturation: nodes far from origin are more vivid
+    const dist = Math.sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
+    const saturation = 72 + Math.min(dist / 5, 1) * 20; // 72 % → 92 %
+    n.color = n.id === 0
+      ? '#ffffff'   // centre hub stays white-hot
+      : hslToHex(hueShifted, saturation, lightness);
+  });
+})();
+
+/* ═══════════════════════════════════════════════════
+   BUILD NODES
+   ═══════════════════════════════════════════════════ */
+const nodeMap = {};
+NODES.forEach(n => nodeMap[n.id] = n);
+
+const meshObjects = []; // for raycasting
+
+NODES.forEach(n => {
+  const col = new THREE.Color(n.color);
+  const s   = n.r;
+
+  const sr  = n.id === 0 ? s * 0.55 : 0.22;
+  const geo = new THREE.SphereGeometry(sr, 28, 18);
+
+  const mat = new THREE.MeshPhongMaterial({
+    color: col,
+    emissive: col,
+    emissiveIntensity: HUB_IDS.has(n.id) ? 0.35 : 0.18,
+    shininess: 90,
+    transparent: true,
+    opacity: 0.90,
+    specular: new THREE.Color(0x334455),
+  });
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(n.x, n.y, n.z);
+  mesh.userData = {node:n, baseEI: HUB_IDS.has(n.id)?0.35:0.12};
+  scene.add(mesh);
+  meshObjects.push(mesh);
+  n._mesh = mesh;
+
+  // Glowing orb layers
+  const isCenter = n.id === 0;
+  const isHub    = HUB_IDS.has(n.id);
+
+  // 1 · Tight bloom (white-hot core → node colour)
+  const bloomSize    = isCenter ? 3.2 : (isHub ? 1.4 : 0.95);
+  const bloomOpacity = isCenter ? 0.90 : (isHub ? 0.60 : 0.42);
+  const bloomSprite  = makeOrbBloom(n.color, bloomOpacity);
+  bloomSprite.scale.setScalar(bloomSize);
+  bloomSprite.position.set(n.x, n.y, n.z);
+  scene.add(bloomSprite);
+  n._glow     = bloomSprite;
+  n._glowBase = bloomSize;
+
+  // 2 · Wide diffuse aura (coloured atmospheric halo)
+  const auraSize    = isCenter ? 8.5 : (isHub ? 3.6 : 2.4);
+  const auraOpacity = isCenter ? 0.38 : (isHub ? 0.22 : 0.14);
+  const auraSprite  = makeOrbAura(n.color, auraOpacity);
+  auraSprite.scale.setScalar(auraSize);
+  auraSprite.position.set(n.x, n.y, n.z);
+  scene.add(auraSprite);
+  n._aura     = auraSprite;
+  n._auraBase = auraSize;
+
+  // Wireframe ring for hub 0
+  if (n.id === 0) {
+    const wGeo = new THREE.TorusGeometry(s*1.6, 0.025, 8, 40);
+    const wMat = new THREE.MeshBasicMaterial({color:0x00d4aa, transparent:true, opacity:0.3});
+    const torus = new THREE.Mesh(wGeo, wMat);
+    torus.rotation.x = Math.PI/2;
+    mesh.add(torus);
+    n._torus = torus;
+  }
+
+  // Sprite label
+  const lbl = makeLabel(n.label, n.color);
+  lbl.position.set(n.x, n.y + sr + 0.18, n.z);
+  scene.add(lbl);
+  n._label = lbl;
+});
+
+/* ═══════════════════════════════════════════════════
+   BUILD EDGES
+   ═══════════════════════════════════════════════════ */
+LINKS.forEach(([a,b]) => {
+  const na = nodeMap[a], nb = nodeMap[b];
+  if (!na||!nb) return;
+
+  const key     = `${Math.min(a,b)}-${Math.max(a,b)}`;
+  const isHub   = a===0||b===0;
+  const isBridge= BRIDGE_SET.has(key);
+
+  const pts = [
+    new THREE.Vector3(na.x, na.y, na.z),
+    new THREE.Vector3(nb.x, nb.y, nb.z),
+  ];
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+
+  let color, opacity;
+  if (isHub)        { color=0x00d4aa; opacity=0.38; }
+  else if (isBridge){ color=0xfb923c; opacity=0.55; }
+  else               { color=0x4a6580; opacity=0.18; }
+
+  const line = new THREE.Line(geo,
+    new THREE.LineBasicMaterial({color, transparent:true, opacity}));
+  scene.add(line);
+});
+
+/* ═══════════════════════════════════════════════════
+   PARTICLE BRIDGES
+   ═══════════════════════════════════════════════════ */
+const pSystems = [];
+BRIDGES.forEach(([a,b]) => {
+  const na=nodeMap[a], nb=nodeMap[b]; if(!na||!nb) return;
+  const COUNT = 8;
+  const pos   = new Float32Array(COUNT*3);
+  const geo   = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const mat   = new THREE.PointsMaterial({
+    color:0xfb923c, size:0.09, transparent:true, opacity:0.9,
+    blending:THREE.AdditiveBlending, depthWrite:false,
+  });
+  const pts = new THREE.Points(geo, mat);
+  scene.add(pts);
+  pSystems.push({
+    geo, pts,
+    A: new THREE.Vector3(na.x,na.y,na.z),
+    B: new THREE.Vector3(nb.x,nb.y,nb.z),
+    t: Array.from({length:COUNT},(_,i)=>i/COUNT),
+    count: COUNT,
+  });
+});
+
+/* ═══════════════════════════════════════════════════
+   STAR FIELD (background depth)
+   ═══════════════════════════════════════════════════ */
+(function(){
+  const count=400, pos=new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    pos[i*3]  =(Math.random()-0.5)*60;
+    pos[i*3+1]=(Math.random()-0.5)*60;
+    pos[i*3+2]=(Math.random()-0.5)*60;
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const mat=new THREE.PointsMaterial({color:0xffffff,size:0.04,transparent:true,opacity:0.25});
+  scene.add(new THREE.Points(geo,mat));
+})();
+
+/* ═══════════════════════════════════════════════════
+   LABELS (canvas-texture sprites)
+   ═══════════════════════════════════════════════════ */
+function hexToRgb(hex) {
+  return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+}
+
+// Tight bright bloom — white hot core fading into node colour
+function makeOrbBloom(hexColor, opacity) {
+  const size = 256;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const half = size / 2;
+  const [r,g,b] = hexToRgb(hexColor);
+  const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+  grad.addColorStop(0,    `rgba(255,255,255,1)`);
+  grad.addColorStop(0.04, `rgba(255,255,255,${Math.min(opacity*1.8,1).toFixed(3)})`);
+  grad.addColorStop(0.12, `rgba(${r},${g},${b},${Math.min(opacity*1.4,1).toFixed(3)})`);
+  grad.addColorStop(0.35, `rgba(${r},${g},${b},${(opacity*0.7).toFixed(3)})`);
+  grad.addColorStop(0.65, `rgba(${r},${g},${b},${(opacity*0.25).toFixed(3)})`);
+  grad.addColorStop(1,    `rgba(${r},${g},${b},0)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  return new THREE.Sprite(new THREE.SpriteMaterial({
+    map: tex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+  }));
+}
+
+// Wide diffuse aura — pure colour, very soft falloff
+function makeOrbAura(hexColor, opacity) {
+  const size = 256;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const half = size / 2;
+  const [r,g,b] = hexToRgb(hexColor);
+  const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+  grad.addColorStop(0,    `rgba(${r},${g},${b},${opacity.toFixed(3)})`);
+  grad.addColorStop(0.25, `rgba(${r},${g},${b},${(opacity*0.65).toFixed(3)})`);
+  grad.addColorStop(0.55, `rgba(${r},${g},${b},${(opacity*0.22).toFixed(3)})`);
+  grad.addColorStop(0.80, `rgba(${r},${g},${b},${(opacity*0.06).toFixed(3)})`);
+  grad.addColorStop(1,    `rgba(${r},${g},${b},0)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  return new THREE.Sprite(new THREE.SpriteMaterial({
+    map: tex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+  }));
+}
+
+function makeLabel(text, color) {
+  const lines  = text.split('\n');
+  const maxLen = Math.max(...lines.map(l=>l.length));
+  const W = Math.max(128, maxLen*13+24);
+  const H = lines.length*20+12;
+  const c = document.createElement('canvas');
+  c.width=W; c.height=H;
+  const ctx = c.getContext('2d');
+  ctx.font = `600 ${lines.length>1?11:12}px "DM Sans",sans-serif`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  lines.forEach((ln,i)=>
+    ctx.fillText(ln, W/2, H/2+(i-(lines.length-1)/2)*18));
+  const tex = new THREE.CanvasTexture(c);
+  const spr = new THREE.Sprite(
+    new THREE.SpriteMaterial({map:tex, transparent:true, opacity:0.85, depthWrite:false}));
+  spr.scale.set((W/H)*0.48, 0.48, 1);
+  return spr;
+}
+
+/* ═══════════════════════════════════════════════════
+   RAYCASTER / HOVER / TOOLTIP
+   ═══════════════════════════════════════════════════ */
+const raycaster = new THREE.Raycaster();
+const mouse     = new THREE.Vector2(-9999,-9999);
+const tt        = document.getElementById('tt');
+const ttName    = document.getElementById('tt-name');
+const ttDesc    = document.getElementById('tt-desc');
+const ttBadge   = document.getElementById('tt-badge');
+const ttCoords  = document.getElementById('tt-coords');
+let hoveredMesh = null;
+
+function onPointerMove(e) {
+  const r  = wrap.getBoundingClientRect();
+  const cx = e.touches?e.touches[0].clientX:e.clientX;
+  const cy = e.touches?e.touches[0].clientY:e.clientY;
+  mouse.x  = ((cx-r.left)/r.width)*2-1;
+  mouse.y  =-((cy-r.top)/r.height)*2+1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(meshObjects);
+
+  if (hits.length) {
+    const h = hits[0].object;
+    if (hoveredMesh !== h) {
+      if (hoveredMesh) { unhover(hoveredMesh); }
+      hoveredMesh = h;
+      hover(h);
+    }
+    const n = h.userData.node;
+    ttName.textContent  = n.label.replace('\n',' ');
+    ttName.style.color  = n.color;
+    ttDesc.textContent  = n.tip;
+    ttBadge.textContent = n.cat;
+    ttBadge.style.color = n.color;
+    ttBadge.style.borderColor = n.color+'55';
+    ttBadge.style.background  = n.color+'14';
+    ttCoords.textContent= `x ${n.x.toFixed(1)} · y ${n.y.toFixed(1)} · z ${n.z.toFixed(1)}`;
+    tt.style.left = (cx+16)+'px';
+    tt.style.top  = (cy-16)+'px';
+    tt.classList.add('vis');
+  } else {
+    if (hoveredMesh) { unhover(hoveredMesh); hoveredMesh=null; }
+    tt.classList.remove('vis');
+  }
+}
+
+function hover(m) {
+  m.material.emissiveIntensity = 0.75;
+  m.scale.setScalar(1.18);
+}
+function unhover(m) {
+  m.material.emissiveIntensity = m.userData.baseEI;
+  m.scale.setScalar(1.0);
+}
+
+renderer.domElement.addEventListener('mousemove', onPointerMove, {passive:true});
+renderer.domElement.addEventListener('touchmove', onPointerMove, {passive:true});
+renderer.domElement.addEventListener('mouseleave', ()=>{ tt.classList.remove('vis'); });
+
+/* ═══════════════════════════════════════════════════
+   CAMERA PRESETS
+   ═══════════════════════════════════════════════════ */
+const RESET_POS    = new THREE.Vector3(7.5, 5, 9.5);
+const RESET_TARGET = new THREE.Vector3(0, 0, 0);
+
+function toCam(destPos, destTarget, dur=900) {
+  const s0 = camera.position.clone();
+  const t0 = controls.target.clone();
+  const t  = {v:0};
+  const start = performance.now();
+  function step(now) {
+    const raw  = (now-start)/dur;
+    const ease = raw<0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
+    const e    = Math.min(ease,1);
+    camera.position.lerpVectors(s0, destPos, e);
+    controls.target.lerpVectors(t0, destTarget, e);
+    controls.update();
+    if (raw<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.getElementById('btnTop').onclick  = ()=> toCam(new THREE.Vector3(0,13,0.001), RESET_TARGET.clone());
+document.getElementById('btnSide').onclick = ()=> toCam(new THREE.Vector3(13,0,0.001), RESET_TARGET.clone());
+document.getElementById('btnFront').onclick= ()=> toCam(new THREE.Vector3(0.001,0,13), RESET_TARGET.clone());
+document.getElementById('btnReset').onclick= ()=> toCam(RESET_POS.clone(), RESET_TARGET.clone());
+
+const btnRot = document.getElementById('btnRotate');
+btnRot.onclick = function() {
+  controls.autoRotate = !controls.autoRotate;
+  this.classList.toggle('rot-on', controls.autoRotate);
+  this.textContent = controls.autoRotate ? '⏹ Stop Rotate' : '⟳ Auto-Rotate';
+};
+
+function zoomCamera(factor) {
+  const dir = new THREE.Vector3();
+  camera.getWorldDirection(dir);
+  const dist = camera.position.distanceTo(controls.target);
+  const step = dist * (1 - factor);
+  const newPos = camera.position.clone().addScaledVector(dir, step);
+  // Clamp to min/max distance
+  const newDist = newPos.distanceTo(controls.target);
+  if (newDist < controls.minDistance || newDist > controls.maxDistance) return;
+  toCam(newPos, controls.target.clone(), 300);
+}
+document.getElementById('btnZoomIn').onclick  = () => zoomCamera(0.75);
+document.getElementById('btnZoomOut').onclick = () => zoomCamera(1.33);
+
+/* ═══════════════════════════════════════════════════
+   RESIZE
+   ═══════════════════════════════════════════════════ */
+function onResize() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', onResize);
+onResize();
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION LOOP
+   ═══════════════════════════════════════════════════ */
+let clock = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  clock += 0.014;
+
+  // Pulse all nodes + glow radiation
+  NODES.forEach(n => {
+    if (!n._mesh) return;
+    const isCenter = n.id === 0;
+    const isHub    = HUB_IDS.has(n.id);
+    const base  = isCenter ? 0.28 : (isHub ? 0.22 : 0.10);
+    const amp   = isCenter ? 0.24 : (isHub ? 0.18 : 0.11);
+    const speed = isCenter ? 1.6  : (isHub ? 1.8  : 1.3);
+    const phase = n.id * 0.85;
+    const wave  = Math.sin(clock * speed + phase);
+
+    if (n._mesh !== hoveredMesh)
+      n._mesh.material.emissiveIntensity = base + amp * wave;
+
+    // Tight bloom — pulses in sync with emissive
+    if (n._glow) {
+      const bloomAmp = isCenter ? 0.50 : (isHub ? 0.28 : 0.18);
+      n._glow.scale.setScalar(n._glowBase + bloomAmp * wave);
+    }
+
+    // Wide aura — breathes slower, offset phase for organic feel
+    if (n._aura) {
+      const auraAmp  = isCenter ? 1.40 : (isHub ? 0.55 : 0.35);
+      const auraWave = Math.sin(clock * speed * 0.55 + phase + 1.8);
+      n._aura.scale.setScalar(n._auraBase + auraAmp * auraWave);
+    }
+  });
+
+  // Spin hub 0 torus ring
+  if (nodeMap[0]._torus) nodeMap[0]._torus.rotation.z += 0.008;
+
+  // Animate particle bridges
+  pSystems.forEach(ps => {
+    const arr = ps.geo.attributes.position.array;
+    ps.t = ps.t.map(v => (v+0.006)%1);
+    for (let i=0; i<ps.count; i++) {
+      const f=ps.t[i];
+      arr[i*3]   = ps.A.x+(ps.B.x-ps.A.x)*f;
+      arr[i*3+1] = ps.A.y+(ps.B.y-ps.A.y)*f;
+      arr[i*3+2] = ps.A.z+(ps.B.z-ps.A.z)*f;
+    }
+    ps.geo.attributes.position.needsUpdate = true;
+  });
+
+  // Drift point light
+  pLight.position.x = 3+Math.sin(clock*0.38)*2;
+  pLight.position.z = 3+Math.cos(clock*0.28)*2;
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+/* ═══════════════════════════════════════════════════
+   HIDE LOADER
+   ═══════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ldr = document.getElementById('loader');
+    ldr.classList.add('fade');
+    setTimeout(() => ldr.remove(), 650);
+  }, 700);
+});
+
+})();
+</script>
+</body>
+</html>

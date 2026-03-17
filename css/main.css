@@ -116,6 +116,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .acc-modal-body{padding:14px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
 .acc-item{display:flex;align-items:flex-start;gap:8px;font-size:.62rem;color:var(--text);line-height:1.55;padding:7px 10px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:background .15s,border-color .15s}
 .acc-item:hover{background:rgba(0,212,170,.06);border-color:rgba(0,212,170,.25)}
+.acc-item span{flex:1}
+.acc-photo-btn{flex-shrink:0;background:none;border:1px solid rgba(0,212,170,.3);border-radius:6px;color:var(--teal);font-size:.75rem;padding:1px 5px;cursor:pointer;line-height:1.4;transition:background .15s,border-color .15s;align-self:center}
+.acc-photo-btn:hover{background:rgba(0,212,170,.15);border-color:rgba(0,212,170,.7)}
 .acc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;box-shadow:0 0 5px currentColor}
 .acc-item a{color:var(--teal)}
 .acc-htag{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:99px;font-size:.7rem;font-weight:600;border:1px solid rgba(167,139,250,.45);color:var(--violet);background:rgba(167,139,250,.1);text-decoration:none;transition:background .2s,border-color .2s,box-shadow .2s}
@@ -162,6 +165,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* --- Gallery carousel modal --- */
 #galleryModal,#drawingsModal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
 #galleryModal.open,#drawingsModal.open{display:flex}
+#volGalleryModal{display:none;position:fixed;inset:0;z-index:10002;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
+#volGalleryModal.open{display:flex}
 .gm-inner{position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:12px}
 .gm-img-wrap{position:relative;width:min(620px,80vw,65vh);height:min(620px,80vw,65vh)}
 .gm-img-box{width:100%;height:100%;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.6)}

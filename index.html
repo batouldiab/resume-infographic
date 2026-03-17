@@ -431,6 +431,19 @@
   </div>
 </div>
 
+<!-- Vol item photo gallery modal -->
+<div id="volGalleryModal" role="dialog" aria-modal="true" aria-label="Photo Gallery">
+  <div class="gm-inner">
+    <div class="gm-img-wrap">
+      <div class="gm-img-box"><img id="volGalImg" src="" alt="Photo"></div>
+      <button class="gm-arrow gm-prev" onclick="volGalPrev()" aria-label="Previous">&#8249;</button>
+      <button class="gm-arrow gm-next" onclick="volGalNext()" aria-label="Next">&#8250;</button>
+      <button class="gm-close" onclick="closeVolGallery()" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="gm-dots" id="volGalDots"></div>
+  </div>
+</div>
+
 <!-- ── Scripts ─────────────────────────────────────────────── -->
 <!-- 1. UI helpers: tooltip, gallery carousels, section modal  -->
 <script src="js/ui.js"></script>

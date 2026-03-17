@@ -75,6 +75,39 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='Escape')closeDrawingsGallery();
 });
 
+/* --- Vol item photo gallery --- */
+var _volGalImgs = [];
+var _volGalIdx = 0;
+function openVolGallery(imgs) {
+  _volGalImgs = imgs;
+  _volGalIdx = 0;
+  _volGalRender();
+  document.getElementById('volGalleryModal').classList.add('open');
+}
+function closeVolGallery() {
+  document.getElementById('volGalleryModal').classList.remove('open');
+}
+function _volGalRender() {
+  document.getElementById('volGalImg').src = _volGalImgs[_volGalIdx];
+  var dotsEl = document.getElementById('volGalDots');
+  dotsEl.innerHTML = '';
+  _volGalImgs.forEach(function(_, i) {
+    var b = document.createElement('button');
+    b.className = 'gm-dot' + (i === _volGalIdx ? ' active' : '');
+    (function(idx){ b.addEventListener('click', function(){ _volGalIdx = idx; _volGalRender(); }); })(i);
+    dotsEl.appendChild(b);
+  });
+}
+function volGalPrev() { _volGalIdx = (_volGalIdx - 1 + _volGalImgs.length) % _volGalImgs.length; _volGalRender(); }
+function volGalNext() { _volGalIdx = (_volGalIdx + 1) % _volGalImgs.length; _volGalRender(); }
+document.addEventListener('keydown', function(e) {
+  var m = document.getElementById('volGalleryModal');
+  if (!m.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') volGalPrev();
+  else if (e.key === 'ArrowRight') volGalNext();
+  else if (e.key === 'Escape') closeVolGallery();
+});
+
 /* --- Section Modal --- */
 var _accData = {
   vol: {
@@ -82,12 +115,13 @@ var _accData = {
     title: 'Volunteering & Certifications',
     color: '#00d4aa',
     items: [
-      {dot:'#00d4aa', html:'🏅 Judge — <a href="https://www.robogeex.com/ai-challenge-2025" target="_blank">AI Challenge 2025: AI for Well-Being</a>'},
-      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2024</a>'},
-      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2025</a>'},
-      {dot:'#00d4aa', html:'🔬 Team Coach — <a href="https://ifia.com/lebanon-nasr/" target="_blank">National Science Competition 2024</a>'},
-      {dot:'#00d4aa', html:'⚙️ Team Coach — <a href="https://arclebanon.org/" target="_blank">Annual Robotics Competition — Lebanon</a>'},
-      {dot:'#00d4aa', html:'🖥️ Member — <a href="https://scsl.org.lb/" target="_blank">Syndicate of Computer Sciences in Lebanon</a> (Beirut)'},
+      {dot:'#00d4aa', html:'🏅 Judge — <a href="https://www.robogeex.com/ai-challenge-2025" target="_blank">AI Challenge 2025: AI for Well-Being</a>', photos:['media/ai_judge.jpg']},
+      {dot:'#00d4aa', html:'⚙️ Team Coach — <a href="https://arclebanon.org/" target="_blank">Annual Robotics Competition — Lebanon 2025</a>', photos:['media/arc1.jpg','media/arc2.jpg']},
+      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2025</a>', photos:['media/wro2025_1.jpg','media/wro2025_2.jpg']},
+      {dot:'#00d4aa', html:'🤖 Team Coach (3 teams) — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2024</a>', photos:['media/wro2024_1.jpg','media/wro2024_2.jpg','media/wro2024_3.jpg','media/wro2024_4.jpg']},
+      {dot:'#00d4aa', html:'🔬 Team Coach — <a href="https://ifia.com/lebanon-nasr/" target="_blank">National Science Competition — Lebanon 2024</a>', photos:['media/nsc1.jpg','media/nsc2.jpg']},
+      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://ictd-lb.com/?page=item&ItemId=292" target="_blank">National Robotics Competition — Lebanon 2024</a>', photos:['media/nrc_1.jpg','media/nrc_2.jpg']},
+      {dot:'#00d4aa', html:'🖥️ Member — <a href="https://scsl.org.lb/" target="_blank">Syndicate of Computer Sciences in Lebanon</a> (Beirut)', photos:['media/syndicate1.jpg','media/syndicate2.png','media/syndicate3.jpg']},
       {dot:'#00d4aa', html:'📜 Certificate — <a href="https://learningnetwork.cisco.com/s/ccna" target="_blank">CCNA Routing &amp; Switching: Introduction to Networks</a> · Cisco'},
       {dot:'#00d4aa', html:'🎤 Conference Presenter — <em>Data Acquisition &amp; Preprocessing: Brain Imaging Data as an Example</em> · <a href="https://www.facebook.com/Ektidar.Center/" target="_blank">Ektidar</a> Medical Research Applications'},
       {dot:'#00d4aa', html:'🌍 Volunteer — Leading Migration Statistics for People Impacted during the 2024 War on Lebanon'}
@@ -128,15 +162,15 @@ function openAccModal(type) {
       var row = document.createElement('div');
       row.className = 'acc-item';
       row.innerHTML = '<div class="acc-dot" style="color:' + it.dot + ';background:' + it.dot + '"></div><span>' + it.html + '</span>';
-      var hrefMatch = it.html.match(/href="([^"]+)"/);
-      if (hrefMatch) {
-        row.style.cursor = 'pointer';
-        row.classList.add('acc-item-link');
-        (function(url) {
-          row.addEventListener('click', function(e) {
-            if (e.target.tagName !== 'A') window.open(url, '_blank', 'noopener,noreferrer');
-          });
-        })(hrefMatch[1]);
+      if (it.photos && it.photos.length) {
+        var btn = document.createElement('button');
+        btn.className = 'acc-photo-btn';
+        btn.title = 'View photos';
+        btn.textContent = '📷';
+        (function(imgs) {
+          btn.addEventListener('click', function(e) { e.stopPropagation(); openVolGallery(imgs); });
+        })(it.photos);
+        row.appendChild(btn);
       }
       body.appendChild(row);
     });

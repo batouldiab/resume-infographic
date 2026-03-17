@@ -255,7 +255,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
         bgCircle.setAttribute('cx','0');bgCircle.setAttribute('cy','0');bgCircle.setAttribute('r',n.r-2);
         bgCircle.setAttribute('fill','#000000');g.appendChild(bgCircle);
         const img=document.createElementNS('http://www.w3.org/2000/svg','image');
-        img.setAttribute('href','media/graduate.png');
+        img.setAttribute('href','media/graduate.webp');
         img.setAttribute('x',-n.r+2);img.setAttribute('y',-n.r+2);
         img.setAttribute('width',(n.r-2)*2);img.setAttribute('height',(n.r-2)*2);
         img.setAttribute('preserveAspectRatio','xMidYMid slice');

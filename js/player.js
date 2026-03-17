@@ -30,8 +30,26 @@ document.getElementById('net3dModal').addEventListener('click', function(e) { if
 var _music = document.getElementById('bgMusic');
 var _musicPlaying = false;
 var _activeTrack = 'media/meditation.mp3';
-// load default track
-_music.src = _activeTrack;
+// src is intentionally NOT set here — load lazily on first play to avoid
+// downloading 9 MB on page load. preload="none" in HTML is also required.
+
+// Show ⏳ while the browser is buffering, restore ⏸ once playing resumes
+_music.addEventListener('waiting', function() {
+  if (_musicPlaying) document.getElementById('musicPlayBtn').textContent = '⏳';
+});
+_music.addEventListener('playing', function() {
+  document.getElementById('musicPlayBtn').textContent = '⏸';
+});
+
+function _updateTrackButtons(src) {
+  var isMed = src === 'media/meditation.mp3';
+  document.getElementById('trackMeditate').style.background    = isMed  ? 'rgba(0,212,170,.2)' : 'none';
+  document.getElementById('trackMeditate').style.color         = isMed  ? 'var(--teal)' : '#4a6580';
+  document.getElementById('trackMeditate').style.borderColor   = isMed  ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
+  document.getElementById('trackVoice').style.background       = !isMed ? 'rgba(0,212,170,.2)' : 'none';
+  document.getElementById('trackVoice').style.color            = !isMed ? 'var(--teal)' : '#4a6580';
+  document.getElementById('trackVoice').style.borderColor      = !isMed ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
+}
 
 function switchTrack(src, label) {
   var wasPlaying = _musicPlaying;
@@ -43,13 +61,7 @@ function switchTrack(src, label) {
   }
   _activeTrack = src;
   _music.src = src;
-  // highlight active button
-  document.getElementById('trackMeditate').style.background = src === 'media/meditation.mp3' ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackMeditate').style.color = src === 'media/meditation.mp3' ? 'var(--teal)' : '#4a6580';
-  document.getElementById('trackMeditate').style.borderColor = src === 'media/meditation.mp3' ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
-  document.getElementById('trackVoice').style.background = src !== 'meditation.mp3' ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackVoice').style.color = src !== 'meditation.mp3' ? 'var(--teal)' : '#4a6580';
-  document.getElementById('trackVoice').style.borderColor = src !== 'meditation.mp3' ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
+  _updateTrackButtons(src);
   if (wasPlaying) toggleMusic();
 }
 
@@ -60,12 +72,19 @@ function toggleMusic() {
     document.getElementById('musicEq').classList.remove('active');
     _musicPlaying = false;
   } else {
+    // Lazy-load: set src only on first play (avoids page-load network fetch)
+    if (!_music.src || _music.src === window.location.href) {
+      _music.src = _activeTrack;
+    }
+    var btn = document.getElementById('musicPlayBtn');
+    btn.textContent = '⏳';
     _music.volume = parseFloat(document.getElementById('musicVol').value);
     _music.play().then(function(){
-      document.getElementById('musicPlayBtn').textContent = '⏸';
+      btn.textContent = '⏸';
       document.getElementById('musicEq').classList.add('active');
       _musicPlaying = true;
     }).catch(function(e){
+      btn.textContent = '▶';
       console.warn('Music play failed:', e);
     });
   }

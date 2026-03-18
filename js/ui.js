@@ -138,8 +138,8 @@ var _accData = {
     items: [
       {dot:'#00d4aa', html:'🏅 Judge — <a href="https://www.robogeex.com/ai-challenge-2025" target="_blank">AI Challenge 2025: AI for Well-Being</a>', photos:['media/ai_judge.webp']},
       {dot:'#00d4aa', html:'⚙️ Team Coach — <a href="https://arclebanon.org/" target="_blank">Annual Robotics Competition — Lebanon 2025</a>', photos:['media/arc1.webp','media/arc2.webp']},
-      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2025</a>', photos:['media/wro2025_1.webp','media/wro2025_2.webp']},
-      {dot:'#00d4aa', html:'🤖 Team Coach (3 teams) — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2024</a>', photos:['media/wro2024_1.webp','media/wro2024_2.webp','media/wro2024_3.webp','media/wro2024_4.webp']},
+      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/competition/2025-season/" target="_blank">World Robot Olympiad 2025</a>', photos:['media/wro2025_1.webp','media/wro2025_2.webp']},
+      {dot:'#00d4aa', html:'🤖 Team Coach (3 teams) — <a href="https://wro-association.org/competition/2024-season/" target="_blank">World Robot Olympiad 2024</a>', photos:['media/wro2024_1.webp','media/wro2024_2.webp','media/wro2024_3.webp','media/wro2024_4.webp']},
       {dot:'#00d4aa', html:'🔬 Team Coach — <a href="https://ifia.com/lebanon-nasr/" target="_blank">National Science Competition — Lebanon 2024</a>', photos:['media/nsc1.webp','media/nsc2.webp']},
       {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://ictd-lb.com/?page=item&ItemId=292" target="_blank">National Robotics Competition — Lebanon 2024</a>', photos:['media/nrc_1.webp','media/nrc_2.webp']},
       {dot:'#00d4aa', html:'🖥️ Member — <a href="https://scsl.org.lb/" target="_blank">Syndicate of Computer Sciences in Lebanon</a> (Beirut)', photos:['media/syndicate1.webp','media/syndicate2.webp','media/syndicate3.webp']},

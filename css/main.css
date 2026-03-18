@@ -42,6 +42,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .music-eq span:nth-child(4){height:9px;animation-delay:.1s}
 .music-eq.active{opacity:1}
 @keyframes eq{to{height:3px}}
+@keyframes radarBlink{0%,100%{opacity:1;r:5}50%{opacity:.35;r:3}}
 .stats{display:flex;gap:5px;flex-shrink:0}
 .sp{text-align:center;padding:4px 9px;border-radius:7px;background:var(--card);border:1px solid var(--border)}
 .sp .n{font-size:1rem;font-weight:900;color:var(--teal);line-height:1;font-family:'JetBrains Mono',monospace}

@@ -117,15 +117,24 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
 
   // dots + labels
   const dots=labels.map((lbl,i)=>{
+    // invisible large hit zone around the dot
+    const h=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    h.setAttribute('r','10');h.setAttribute('fill','transparent');h.setAttribute('stroke','none');h.style.cursor='pointer';svg.appendChild(h);
     const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('r','3.5');c.style.cursor='default';svg.appendChild(c);
-    c.addEventListener('mouseenter',()=>showRadarTip(c,lbl,c.getAttribute('fill')||'#00d4aa'));
-    c.addEventListener('mouseleave',hideRadarTip);
+    c.setAttribute('r','5');c.style.cursor='pointer';
+    c.style.animation=`radarBlink ${3+i*0.25}s ease-in-out infinite`;svg.appendChild(c);
+    const tip=()=>showRadarTip(c,lbl,c.getAttribute('fill')||'#00d4aa');
+    h.addEventListener('mouseenter',tip);h.addEventListener('mouseleave',hideRadarTip);
+    c.addEventListener('mouseenter',tip);c.addEventListener('mouseleave',hideRadarTip);
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    const lx=cx+(R+13)*Math.cos(angs[i]),ly=cy+(R+13)*Math.sin(angs[i]);
-    t.setAttribute('x',lx);t.setAttribute('y',ly+3);t.setAttribute('text-anchor','middle');
-    t.setAttribute('font-family',"'Exo 2',sans-serif");t.setAttribute('font-size','7');t.setAttribute('fill','#c8d8e8');t.setAttribute('pointer-events','none');t.textContent=lbl;svg.appendChild(t);
-    return c;
+    const lx=cx+(R+14)*Math.cos(angs[i]),ly=cy+(R+14)*Math.sin(angs[i]);
+    const ca=Math.cos(angs[i]),anchor=ca<-0.1?'end':ca>0.1?'start':'middle';
+    t.setAttribute('x',lx);t.setAttribute('y',ly+3);t.setAttribute('text-anchor',anchor);
+    t.setAttribute('font-family',"'Exo 2',sans-serif");t.setAttribute('font-size','7');t.setAttribute('fill','#c8d8e8');t.style.cursor='pointer';t.textContent=lbl;svg.appendChild(t);
+    t.addEventListener('mouseenter',tip);t.addEventListener('mouseleave',hideRadarTip);
+    // hit zone position is updated in update() alongside the dot
+    h._hit=h;
+    return{c,h};
   });
 
   function update(pct){
@@ -139,8 +148,9 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     poly.setAttribute('points',pts.map(p=>`${p.vx},${p.vy}`).join(' '));
     pts.forEach((p,i)=>{
       const col=valColor(p.v);
-      dots[i].setAttribute('cx',p.vx);dots[i].setAttribute('cy',p.vy);
-      dots[i].setAttribute('fill',col);dots[i].style.filter=`drop-shadow(0 0 4px ${col})`;
+      dots[i].c.setAttribute('cx',p.vx);dots[i].c.setAttribute('cy',p.vy);
+      dots[i].c.setAttribute('fill',col);dots[i].c.style.filter=`drop-shadow(0 0 4px ${col})`;
+      dots[i].h.setAttribute('cx',p.vx);dots[i].h.setAttribute('cy',p.vy);
     });
   }
 

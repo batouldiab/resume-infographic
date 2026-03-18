@@ -21,26 +21,26 @@
   <div style="flex-shrink:0">
     <div class="hdr-name">Batoul Diab <span class="hdr-pronoun">(her)</span></div>
     <div class="hdr-title">Artificial Intelligence (AI) / <br/>Machine Learning (ML) Scientist</div>
-    <div class="hdr-company"><a href="https://nexasee.com/" target="_blank">NexaSEE Technologies Production</a> — Co-Founder &amp; CTO</div>
+    <div class="hdr-company"><a href="https://nexasee.com/" target="_blank">NexaSEE Technologies Production</a> — Co-Founder</div>
   </div>
   <div class="hdiv"></div>
   <div class="chips">
-    <a class="chip ct" href="mailto:batouldiab@outlook.com">✉ batouldiab@outlook.com</a>
+    <span class="chip ct" id="emailChip" title="batouldiab@outlook.com" style="cursor:pointer" onclick="(function(el){navigator.clipboard.writeText('batouldiab@outlook.com').then(function(){var orig=el.textContent;el.textContent='✓ Copied!';setTimeout(function(){el.textContent=orig;},2000)}).catch(function(){window.location.href='mailto:batouldiab@outlook.com'});})(this)">✉ batouldiab@outlook.com</span>
     <a class="chip ct" href="https://www.linkedin.com/in/batoul96diab/" target="_blank">⬡ LinkedIn</a>
     <a class="chip" href="https://batouldiab.streamlit.app/" target="_blank" style="background:rgba(0,212,170,.15);border-color:rgba(0,212,170,.6);color:#00d4aa;font-weight:700;box-shadow:0 0 10px rgba(0,212,170,.2)">🤖 AI Portfolio</a>
     <a class="chip cg" href="https://earth.google.com/web/search/Beirut/@33.8892183,35.5042823,69.79979647a,7719.09866755d,35y,0h,0t,0r/data=CnUaRxJBCiUweDE1MWYxNzIxNTg4MGE3OGY6MHg3MjkxODJiYWU5OTgzNmI0GYN52cBn8kBAIYkyCjg6wEFAKgZCZWlydXQYAiABIiYKJAlZxhMd-oItQBG-YBt2C7osQBnK0r4WUF9eQCHKqzwkICdeQEICCAE6AwoBMEICCABKDQj___________8BEAA" target="_blank" style="text-decoration:none">📍 Beirut, Lebanon</a>
     <span class="chip cg">☎ +961 76 992 182</span>
-    <!-- MUSIC PLAYER -->
-    <audio id="bgMusic" loop preload="none"></audio>
-    <div class="music-player">
-      <button class="music-btn" id="musicPlayBtn" title="Play" onclick="toggleMusic()">▶</button>
-      <div class="music-eq" id="musicEq"><span></span><span></span><span></span><span></span></div>
-      <div style="display:flex;flex-direction:column;gap:3px">
-        <button onclick="switchTrack('media/meditation.mp3','☯ Meditate')" id="trackMeditate" style="background:rgba(0,212,170,.2);border:1px solid rgba(0,212,170,.5);border-radius:99px;color:var(--teal);font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:700">☯ Meditate</button>
-        <button onclick="switchTrack('media/audio_english.mp3','🎙 Voice Over')" id="trackVoice" style="background:none;border:1px solid rgba(0,212,170,.2);border-radius:99px;color:#a8bfd4;font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:600">🎙 Voice Over</button>
-      </div>
-      <input class="music-vol" id="musicVol" type="range" min="0" max="1" step="0.02" value="0.5" title="Volume" oninput="setVolume(this.value)">
+  </div>
+  <!-- MUSIC PLAYER -->
+  <audio id="bgMusic" loop preload="none"></audio>
+  <div class="music-player">
+    <button class="music-btn" id="musicPlayBtn" title="Play" onclick="toggleMusic()">▶</button>
+    <div class="music-eq" id="musicEq"><span></span><span></span><span></span><span></span></div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <button onclick="switchTrack('media/meditation.mp3','☯ Meditate')" id="trackMeditate" style="background:rgba(0,212,170,.2);border:1px solid rgba(0,212,170,.5);border-radius:99px;color:var(--teal);font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:700">☯ Meditate</button>
+      <button onclick="switchTrack('media/audio_english.mp3','🎙 Voice Over')" id="trackVoice" style="background:none;border:1px solid rgba(0,212,170,.2);border-radius:99px;color:#80d4c6;font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:600">🎙 Voice Over</button>
     </div>
+    <input class="music-vol" id="musicVol" type="range" min="0" max="1" step="0.02" value="0.5" title="Volume" oninput="setVolume(this.value)">
   </div>
   <div class="hdiv"></div>
   <div class="stats">
@@ -62,16 +62,16 @@
     <div style="padding:3px 0 4px">
       <div style="text-align:center;margin-bottom:2px"><span id="gaugeYear" style="font-size:.6rem;font-weight:700;color:#00d4aa">2026</span></div>
       <div style="display:flex;align-items:center;gap:5px">
-        <span style="font-size:.5rem;color:#a8bfd4;white-space:nowrap">2020</span>
+        <span style="font-size:.5rem;color:#80d4c6;white-space:nowrap">2020</span>
         <input id="gaugeSlider" type="range" min="0" max="100" value="100" style="flex:1;height:3px;accent-color:#00d4aa;cursor:pointer">
-        <span style="font-size:.5rem;color:#a8bfd4;white-space:nowrap">2026</span>
+        <span style="font-size:.5rem;color:#80d4c6;white-space:nowrap">2026</span>
       </div>
-      <div style="text-align:center;margin-top:3px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#a8bfd4">Progressive Learning Skills</div>
+      <div style="text-align:center;margin-top:3px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#80d4c6">Progressive Learning Skills</div>
     </div>
     <div class="gauge-stack" id="gaugeStack"></div>
     <div style="text-align:center;margin-top:10px">
       <a href="https://batouldiab.streamlit.app/" target="_blank" style="display:inline-block">
-        <img src="media/robo.webp" alt="AI Robot" style="width:80px;height:auto;display:block;margin:0 auto 6px;animation:roboGlow 3s ease-in-out infinite">
+        <img src="media/chatbot.webp" alt="AI Robot" style="width:100%;max-width:100%;height:auto;display:block;margin:0 auto 6px;animation:roboGlow 3s ease-in-out infinite">
         <span style="font-size:.60rem;color:#00d4aa;font-weight:400;letter-spacing:.03em;text-decoration:underline;text-underline-offset:3px">Interview me via my AI version</span>
       </a>
     </div>
@@ -90,25 +90,25 @@
     <div class="panel" style="flex:1;display:flex;flex-direction:column">
       <div class="pt" style="display:flex;align-items:center;justify-content:space-between">Soft Skills Radar</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;margin-top:5px">
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🎓 Teaching</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🤝 Mentoring</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🔬 Research</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">💬 Communication</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🌟 Leadership</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🔄 Adaptability</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">🧩 Problem-Solving</span>
-        <span style="font-size:.65rem;color:#a8bfd4;white-space:nowrap">👥 Collaboration</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🎓 Teaching</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🤝 Mentoring</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🔬 Research</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">💬 Communication</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🌟 Leadership</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🔄 Adaptability</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">🧩 Problem-Solving</span>
+        <span style="font-size:.65rem;color:#80d4c6;white-space:nowrap">👥 Collaboration</span>
       </div>
-      <svg id="radarSvg" viewBox="-28 -8 256 223" preserveAspectRatio="xMidYMax meet" style="width:100%;flex:1;min-height:0;display:block"></svg>
-      <span style="font-size:.6rem;font-weight:400;color:#7a9ab8;letter-spacing:.04em;text-transform:none;white-space:nowrap;text-align:center">&#x25CE; hover over the emojis for skills</span>
+      <svg id="radarSvg" viewBox="-28 -8 256 223" preserveAspectRatio="xMidYMid meet" style="width:100%;flex:1;min-height:0;display:block"></svg>
+      <span style="font-size:.6rem;font-weight:400;color:#59b8b2;letter-spacing:.04em;text-transform:none;white-space:nowrap;text-align:center">&#x25CE; hover over the emojis for skills</span>
       <div style="padding:4px 2px 2px">
         <div style="text-align:center;margin-bottom:2px"><span id="radarYear" style="font-size:.6rem;font-weight:700;color:#00d4aa">2026</span></div>
         <div style="display:flex;align-items:center;gap:6px">
-          <span style="font-size:.52rem;color:#a8bfd4;white-space:nowrap">2020</span>
+          <span style="font-size:.52rem;color:#80d4c6;white-space:nowrap">2020</span>
           <input id="radarSlider" type="range" min="0" max="100" value="100" style="flex:1;height:3px;accent-color:#00d4aa;cursor:pointer">
-          <span style="font-size:.52rem;color:#a8bfd4;white-space:nowrap">2026</span>
+          <span style="font-size:.52rem;color:#80d4c6;white-space:nowrap">2026</span>
         </div>
-        <div style="text-align:center;margin-top:3px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#a8bfd4">Life-Long Learning</div>
+        <div style="text-align:center;margin-top:3px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#80d4c6">Life-Long Learning</div>
       </div>
     </div>
     <div class="panel">
@@ -401,9 +401,9 @@
       <div class="n3d-li-sep"></div>
       <div class="n3d-li"><div class="n3d-li-line" style="background:rgba(0,212,170,.5)"></div>Hub edge</div>
       <div class="n3d-li"><div class="n3d-li-line" style="background:#fb923c"></div>Bridge</div>
-      <div class="n3d-li"><div class="n3d-li-line" style="background:rgba(255,255,255,.2)"></div>Link</div>
+      <div class="n3d-li"><div class="n3d-li-line" style="background:rgba(0,212,170,.2)"></div>Link</div>
       <div class="n3d-li-sep"></div>
-      <span style="font-size:.58rem;color:#a8bfd4;margin-left:auto">Drag · Scroll zoom · Hover for info</span>
+      <span style="font-size:.58rem;color:#80d4c6;margin-left:auto">Drag · Scroll zoom · Hover for info</span>
     </div>
   </div>
 </div>
@@ -465,12 +465,12 @@
 </div>
 
 <!-- ── Production Credit ────────────────────────────────────── -->
-<div style="text-align:center;padding:18px 10px 10px;color:#a8bfd4;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase">
+<div style="text-align:center;padding:18px 10px 10px;color:#80d4c6;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase">
   <span style="opacity:.45">A</span>
   <a href="https://nexasee.com/" target="_blank" style="color:#00d4aa;font-weight:700;letter-spacing:.14em;opacity:.85;text-decoration:none">NexaSEE Technologies</a>
   <span style="opacity:.45"> Production &nbsp;·&nbsp; </span>
-  <span style="color:#c8d8e8;opacity:.55;font-style:italic;font-weight:600">Batoul Diab</span>
-  <span style="opacity:.35"> &nbsp;—&nbsp; Co-Founder &amp; CTO</span>
+  <span style="color:#b3e8dc;opacity:.55;font-style:italic;font-weight:600">Batoul Diab</span>
+  <span style="opacity:.35"> &nbsp;—&nbsp; Co-Founder</span>
 </div>
 <div style="text-align:center;padding:6px 0 14px;font-size:.65rem;opacity:.35;letter-spacing:.04em">Copyright &copy; 2026 nexasee.com - All Rights Reserved</div>
 

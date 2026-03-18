@@ -44,7 +44,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .wa-speed{font-size:.46rem;font-weight:700;color:var(--teal);background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35);border-radius:4px;padding:1px 5px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:background .15s;flex-shrink:0;line-height:1.4}
 .wa-speed:hover{background:rgba(0,212,170,.25)}
 @keyframes radarBlink{0%,100%{opacity:1;r:5}50%{opacity:.35;r:3}}
-@keyframes roboGlow{0%,100%{filter:brightness(0.45) opacity(0.4) sepia(1) saturate(4) hue-rotate(220deg) drop-shadow(0 0 2px #a78bfa) drop-shadow(0 0 16px #a78bfa)}50%{filter:brightness(0.35) opacity(0.7) sepia(1) saturate(4) hue-rotate(220deg) drop-shadow(0 0 2px #a78bfa) drop-shadow(0 0 4px #a78bfa)}}.stats{display:flex;gap:5px;flex-shrink:0}
+@keyframes roboGlow{0%,100%{filter:brightness(0.45) opacity(0.7) sepia(1) saturate(4) hue-rotate(220deg) drop-shadow(0 0 2px #a78bfa) drop-shadow(0 0 16px #a78bfa)}50%{filter:brightness(0.45) opacity(0.9) sepia(1) saturate(4) hue-rotate(220deg) drop-shadow(0 0 2px #a78bfa) drop-shadow(0 0 4px #a78bfa)}}.stats{display:flex;gap:5px;flex-shrink:0}
 .sp{text-align:center;padding:4px 9px;border-radius:7px;background:var(--card);border:1px solid var(--border)}
 .sp .n{font-size:1rem;font-weight:900;color:var(--teal);line-height:1;font-family:'JetBrains Mono',monospace}
 .sp .l{font-size:.48rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}

@@ -292,6 +292,56 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
       const bottom=cardY+maxH;
       if(bottom>maxBottom) maxBottom=bottom;
     });
+    // Minimalist project branches from 🌍 AI × Society card
+    const sc=cards[1]; // x:313, y:458, w:274, bc:'#ffc93c'
+    const bx=sc.x+sc.w/2, by=sc.y+maxH;
+    const bc2=sc.bc;
+    const stemBot=by+26, lx=bx-110, rx=bx+110, tipY=stemBot+32;
+    function svgEl(tag){return document.createElementNS('http://www.w3.org/2000/svg',tag);}
+    // Vertical stem
+    const stem=svgEl('line');
+    stem.setAttribute('x1',bx);stem.setAttribute('y1',by);
+    stem.setAttribute('x2',bx);stem.setAttribute('y2',stemBot);
+    stem.setAttribute('stroke',bc2);stem.setAttribute('stroke-width','1');
+    stem.setAttribute('stroke-dasharray','4 3');stem.setAttribute('opacity','.45');
+    svg.appendChild(stem);
+    // Left and right branch lines
+    [[bx,stemBot,lx,tipY],[bx,stemBot,rx,tipY]].forEach(([x1,y1,x2,y2])=>{
+      const ln=svgEl('line');
+      ln.setAttribute('x1',x1);ln.setAttribute('y1',y1);
+      ln.setAttribute('x2',x2);ln.setAttribute('y2',y2);
+      ln.setAttribute('stroke',bc2);ln.setAttribute('stroke-width','1');
+      ln.setAttribute('stroke-dasharray','4 3');ln.setAttribute('opacity','.45');
+      svg.appendChild(ln);
+    });
+    // Terminal dots
+    [lx,rx].forEach(cx=>{
+      const dot=svgEl('circle');
+      dot.setAttribute('cx',cx);dot.setAttribute('cy',tipY);
+      dot.setAttribute('r','3');dot.setAttribute('fill',bc2);dot.setAttribute('opacity','.7');
+      svg.appendChild(dot);
+    });
+    // Two-line labels
+    [{x:lx,lines:['United Nations','Regional Labour Intelligence']},
+     {x:rx,lines:['United Nations','Regional Intellectual Capital Map']}
+    ].forEach(({x,lines})=>{
+      const t=svgEl('text');
+      t.setAttribute('x',x);t.setAttribute('y',tipY+14);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-family',"'Exo 2',sans-serif");
+      t.setAttribute('fill',bc2);t.setAttribute('opacity','.78');
+      lines.forEach((txt,i)=>{
+        const ts=svgEl('tspan');
+        ts.setAttribute('x',x);ts.setAttribute('dy',i===0?'0':'13');
+        ts.setAttribute('font-size',i===0?'9':'10.5');
+        ts.setAttribute('font-weight',i===0?'400':'600');
+        ts.textContent=txt;
+        t.appendChild(ts);
+      });
+      svg.appendChild(t);
+    });
+    const branchBottom=tipY+30;
+    if(branchBottom>maxBottom) maxBottom=branchBottom;
     if(maxBottom>H) svg.setAttribute('viewBox',`0 0 ${W} ${maxBottom+20}`);
   });
 

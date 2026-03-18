@@ -71,7 +71,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   }
   const v2020=[.60,.50,.55,.70,.40,.70,.80,.65];
   const v2026=[.90,.88,.80,.85,.73,.84,.90,.84];
-  const labels=['Teaching','Mentoring','Research','Comm.','Leadership','Adaptability','Problem-Solving','Collaboration'];
+  const labels=['Teaching','Mentoring','Research','Communication','Leadership','Adaptability','Problem-Solving','Collaboration'];
   const svg=document.getElementById('radarSvg'),cx=100,cy=95,R=68,N=labels.length;
   const angs=labels.map((_,i)=>-Math.PI/2+i*2*Math.PI/N);
 
@@ -79,13 +79,13 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   [.25,.5,.75,1].forEach(r=>{
     const p=angs.map(a=>`${cx+R*r*Math.cos(a)},${cy+R*r*Math.sin(a)}`).join(' ');
     const el=document.createElementNS('http://www.w3.org/2000/svg','polygon');
-    el.setAttribute('points',p);el.setAttribute('fill','none');el.setAttribute('stroke','#0d2040');el.setAttribute('stroke-width','1');svg.appendChild(el);
+    el.setAttribute('points',p);el.setAttribute('fill','none');el.setAttribute('stroke','#1e4060');el.setAttribute('stroke-width','1');svg.appendChild(el);
   });
   angs.forEach(a=>{
     const l=document.createElementNS('http://www.w3.org/2000/svg','line');
     l.setAttribute('x1',cx);l.setAttribute('y1',cy);
     l.setAttribute('x2',cx+R*Math.cos(a));l.setAttribute('y2',cy+R*Math.sin(a));
-    l.setAttribute('stroke','#0d2040');l.setAttribute('stroke-width','1');svg.appendChild(l);
+    l.setAttribute('stroke','#1e4060');l.setAttribute('stroke-width','1');svg.appendChild(l);
   });
 
   // data polygon
@@ -94,7 +94,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
 
   // radar tip card helpers
   const _rtt=document.getElementById('gtooltip');
-  const _rttEmoji={'Teaching':'🎓','Mentoring':'🤝','Research':'🔬','Comm.':'💬','Leadership':'🌟','Adaptability':'🔄','Problem-Solving':'🧩','Collaboration':'👥'};
+  const _rttEmoji={'Teaching':'🎓','Mentoring':'🤝','Research':'🔬','Communication':'💬','Leadership':'🌟','Adaptability':'🔄','Problem-Solving':'🧩','Collaboration':'👥'};
   function showRadarTip(dotEl,label,color){
     const ttL=_rtt.querySelector('.tt-label'),ttB=_rtt.querySelector('.tt-body');
     _rtt.classList.remove('radar-tip');
@@ -132,7 +132,8 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     h.addEventListener('mouseenter',tip);h.addEventListener('mouseleave',hideRadarTip);
     c.addEventListener('mouseenter',tip);c.addEventListener('mouseleave',hideRadarTip);
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    const lx=cx+(R+14)*Math.cos(angs[i]),ly=cy+(R+14)*Math.sin(angs[i]);
+    const _sinAbs=Math.abs(Math.sin(angs[i]));
+    const lx=cx+(R+14)*Math.cos(angs[i]),ly=cy+(R+14+_sinAbs*8)*Math.sin(angs[i]);
     const ca=Math.cos(angs[i]),anchor=ca<-0.1?'end':ca>0.1?'start':'middle';
     t.setAttribute('x',lx);t.setAttribute('y',ly+3);t.setAttribute('text-anchor',anchor);
     t.setAttribute('dominant-baseline','middle');

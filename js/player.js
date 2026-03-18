@@ -51,10 +51,10 @@ _music.addEventListener('playing', function() {
 function _updateTrackButtons(src) {
   var isMed = src === 'media/meditation.mp3';
   document.getElementById('trackMeditate').style.background    = isMed  ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackMeditate').style.color         = isMed  ? 'var(--teal)' : '#4a6580';
+  document.getElementById('trackMeditate').style.color         = isMed  ? 'var(--teal)' : '#a8bfd4';
   document.getElementById('trackMeditate').style.borderColor   = isMed  ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
   document.getElementById('trackVoice').style.background       = !isMed ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackVoice').style.color            = !isMed ? 'var(--teal)' : '#4a6580';
+  document.getElementById('trackVoice').style.color            = !isMed ? 'var(--teal)' : '#a8bfd4';
   document.getElementById('trackVoice').style.borderColor      = !isMed ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
 }
 

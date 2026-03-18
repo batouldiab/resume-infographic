@@ -369,9 +369,9 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   h+=`</div><div style="display:grid;grid-template-columns:repeat(${jobs.length},1fr);gap:0;margin-top:7px">`;
   jobs.forEach((j,i)=>{
     h+=`<div style="padding:0 3px;text-align:center;${i>0?'border-left:1px dashed #0d2040':''}">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:.49rem;color:#4a6580;margin-bottom:1px">${j.yr}</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:.49rem;color:#a8bfd4;margin-bottom:1px">${j.yr}</div>
       <div style="font-size:.57rem;font-weight:700;color:${j.c};line-height:1.2">${j.role}</div>
-      <div style="font-size:.52rem;color:#4a6580">${j.link?`<a href="${j.link}" target="_blank" style="color:${j.c};text-decoration:none">${j.org}</a>`:j.org}</div>
+      <div style="font-size:.52rem;color:#a8bfd4">${j.link?`<a href="${j.link}" target="_blank" style="color:${j.c};text-decoration:none">${j.org}</a>`:j.org}</div>
     </div>`;
   });
   h+=`</div></div>`;

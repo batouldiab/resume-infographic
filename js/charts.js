@@ -97,35 +97,24 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   const _rttEmoji={'Teaching':'🎓','Mentoring':'🤝','Research':'🔬','Comm.':'💬','Leadership':'🌟','Adaptability':'🔄','Problem-Solving':'🧩','Collaboration':'👥'};
   function showRadarTip(dotEl,label,color){
     const ttL=_rtt.querySelector('.tt-label'),ttB=_rtt.querySelector('.tt-body');
-    clearTimeout(_rtt._expandTimer);
-    _rtt.classList.remove('radar-tip','radar-tip-expanded');
-    ttL.innerHTML=`<span class="rtt-text">${label}</span>`;
+    _rtt.classList.remove('radar-tip');
+    ttL.innerHTML=`<span class="rtt-text">${_rttEmoji[label]||''} ${label}</span>`;
     ttB.textContent='';
     ttL.style.color=color;ttL.style.fontSize='';ttL.style.textTransform='none';
     ttL.style.letterSpacing='0';ttL.style.marginBottom='0';
     _rtt.style.borderColor=color+'44';
     _rtt.style.boxShadow=`0 8px 32px rgba(0,0,0,.55),0 0 18px ${color}22`;
     _rtt.classList.add('radar-tip');
-    const r=dotEl.getBoundingClientRect(),tw=_rtt.offsetWidth||50,th=_rtt.offsetHeight||40;
+    const r=dotEl.getBoundingClientRect(),tw=_rtt.offsetWidth||130,th=_rtt.offsetHeight||34;
     let x=r.left+r.width/2-tw/2,y=r.top-th-10;
     if(y<5)y=r.bottom+10;
     if(x+tw>window.innerWidth-5)x=window.innerWidth-tw-5;
     if(x<5)x=5;
     _rtt.style.left=x+'px';_rtt.style.top=y+'px';
     _rtt.classList.add('visible');
-    _rtt._expandTimer=setTimeout(()=>{
-      // reposition BEFORE expanding so left animates together with text
-      const expandedW=210;
-      let x2=r.left+r.width/2-expandedW/2;
-      if(x2+expandedW>window.innerWidth-5)x2=window.innerWidth-expandedW-5;
-      if(x2<5)x2=5;
-      _rtt.style.left=x2+'px';
-      _rtt.classList.add('radar-tip-expanded');
-    },500);
   }
   function hideRadarTip(){
-    clearTimeout(_rtt._expandTimer);
-    _rtt.classList.remove('radar-tip','radar-tip-expanded');
+    _rtt.classList.remove('radar-tip');
     const ttL=_rtt.querySelector('.tt-label');
     ttL.style.fontSize='';ttL.style.textTransform='';ttL.style.letterSpacing='';ttL.style.marginBottom='';
     hideTip();
@@ -147,7 +136,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     const ca=Math.cos(angs[i]),anchor=ca<-0.1?'end':ca>0.1?'start':'middle';
     t.setAttribute('x',lx);t.setAttribute('y',ly+3);t.setAttribute('text-anchor',anchor);
     t.setAttribute('dominant-baseline','middle');
-    t.setAttribute('font-size','18');t.setAttribute('fill','#c8d8e8');t.style.cursor='pointer';t.textContent=_rttEmoji[lbl]||lbl;svg.appendChild(t);
+    t.setAttribute('font-size','26');t.setAttribute('fill','#c8d8e8');t.style.cursor='pointer';t.textContent=_rttEmoji[lbl]||lbl;svg.appendChild(t);
     const dur=(3+i*0.25)*1000;
     const glowAnim=t.animate([{filter:'drop-shadow(0 0 8px #00d4aa) drop-shadow(0 0 16px #00d4aa)'},{filter:'drop-shadow(0 0 0px transparent)'},{filter:'drop-shadow(0 0 8px #00d4aa) drop-shadow(0 0 16px #00d4aa)'}],{duration:dur,iterations:Infinity,easing:'ease-in-out'});
     t._glowAnim=glowAnim;

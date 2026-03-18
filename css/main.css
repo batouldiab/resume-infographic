@@ -162,11 +162,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 #gtooltip.visible{opacity:1;transform:translateY(0) scale(1)}
 #gtooltip .tt-label{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;opacity:.9}
 #gtooltip .tt-body{color:var(--muted)}
-/* radar tip: empty pill → text expansion */
-#gtooltip.radar-tip{padding:10px 14px;transition:opacity .18s ease,transform .18s ease,left 1.1s ease}
-#gtooltip.radar-tip .tt-label{display:flex;align-items:center;margin-bottom:0;letter-spacing:0;text-transform:none}
-#gtooltip.radar-tip .rtt-text{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;font-size:.85rem;font-weight:700;transition:max-width 1.2s ease,opacity 1s ease .2s}
-#gtooltip.radar-tip.radar-tip-expanded .rtt-text{max-width:180px;opacity:1}
+/* radar tip: fade in */
+#gtooltip.radar-tip{padding:10px 14px}
+#gtooltip.radar-tip .tt-label{margin-bottom:0;letter-spacing:0;text-transform:none}
+#gtooltip.radar-tip .rtt-text{font-size:.85rem;font-weight:700;white-space:nowrap}
 
 /* --- Gallery carousel modal --- */
 #galleryModal,#drawingsModal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}

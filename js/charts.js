@@ -332,7 +332,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
           t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');
           t.setAttribute('y',(pi-(arr.length-1)/2)*11);
           t.setAttribute('font-family',"'Exo 2',sans-serif");
-          t.setAttribute('font-size',Math.max(9.5,Math.min(n.r*.52,n.r*1.9/Math.max(...arr.map(s=>s.length)))));
+          t.setAttribute('font-size','9.5');
           t.setAttribute('font-weight','800');t.setAttribute('fill',n.c);
           t.textContent=p;g.appendChild(t);
         });

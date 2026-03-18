@@ -61,7 +61,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .gauge-title{font-size:.56rem;font-weight:700;color:var(--text);margin-bottom:1px;line-height:1.2}
 .gauge-level{font-size:.52rem;font-weight:700;margin-top:0}
 .g-legend{display:flex;justify-content:space-between;padding:3px 0;gap:1px}
-.g-leg-item{display:flex;align-items:center;gap:2px;font-size:.46rem;color:var(--muted);white-space:nowrap}
+.g-leg-item{display:flex;align-items:center;gap:2px;font-size:.58rem;font-weight:700;color:var(--muted);white-space:nowrap}
 .g-leg-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
 /* RIGHT COL */
@@ -264,16 +264,39 @@ a.gallery-link:hover{background:rgba(255,201,60,.15)}
 .n3d-bar-title{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#ffc93c;flex:1}
 .n3d-close{background:none;border:none;color:#5c7080;font-size:1rem;cursor:pointer;line-height:1;padding:3px 8px;border-radius:5px;transition:color .15s,background .15s}
 .n3d-close:hover{color:#fff;background:rgba(0,212,170,.07)}
-.btn-3d{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:1px solid rgba(56,189,248,.5);background:rgba(56,189,248,.08);color:#38bdf8;cursor:pointer;font-family:inherit;white-space:nowrap;position:relative;overflow:hidden;animation:btn3dPulse 2.2s ease-in-out infinite}
-.btn-3d::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:linear-gradient(90deg,transparent,rgba(56,189,248,.35),transparent);transform:skewX(-20deg);animation:btn3dShine 2.2s ease-in-out infinite}
-.btn-3d:hover{background:rgba(56,189,248,.22);border-color:rgba(56,189,248,.9);box-shadow:0 0 16px rgba(56,189,248,.45);animation:none}
+.btn-3d{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:99px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:2px solid rgba(56,189,248,.75);background:rgba(56,189,248,.13);color:#38bdf8;cursor:pointer;font-family:inherit;white-space:nowrap;position:relative;overflow:hidden;animation:btn3dPulse 1.8s ease-in-out infinite;text-shadow:0 0 10px rgba(56,189,248,.6)}
+.btn-3d::before{content:'';position:absolute;top:-50%;left:-60%;width:45%;height:200%;background:linear-gradient(90deg,transparent,rgba(56,189,248,.55),transparent);transform:skewX(-20deg);animation:btn3dShine 1.8s ease-in-out infinite}
+.btn-3d:hover{background:rgba(56,189,248,.28);border-color:#38bdf8;box-shadow:0 0 24px rgba(56,189,248,.6),0 0 48px rgba(56,189,248,.2);animation:none;transform:scale(1.05)}
 .btn-3d:hover::before{animation:none;opacity:0}
 @keyframes btn3dPulse{
-  0%,100%{box-shadow:0 0 4px rgba(56,189,248,.2),0 0 0px rgba(56,189,248,0)}
-  50%{box-shadow:0 0 10px rgba(56,189,248,.5),0 0 20px rgba(56,189,248,.2)}}
+  0%,100%{box-shadow:0 0 6px rgba(56,189,248,.35),0 0 0px rgba(56,189,248,0)}
+  50%{box-shadow:0 0 16px rgba(56,189,248,.75),0 0 32px rgba(56,189,248,.3)}}
 @keyframes btn3dShine{
   0%{left:-60%;opacity:1}
   55%,100%{left:130%;opacity:0}}
+
+/* ── 3D Cube Button ── */
+.cube-btn{display:inline-grid;place-items:center;cursor:pointer;perspective:160px;flex-shrink:0;vertical-align:middle;margin-left:10px}
+.cube-inner{grid-area:1/1;width:46px;height:46px;position:relative;transform-style:preserve-3d;animation:cubeSequence 24s cubic-bezier(0.45,0,0.55,1) infinite;transition:opacity .4s ease,transform .4s ease}
+.cube-hover-label{grid-area:1/1;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid rgba(56,189,248,.65);background:rgba(56,189,248,.11);color:#38bdf8;white-space:nowrap;text-shadow:0 0 8px rgba(56,189,248,.5);opacity:0;transform:scale(0.8);pointer-events:none;transition:opacity .4s ease,transform .4s ease}
+.cube-btn:hover .cube-inner{opacity:0;transform:scale(0.6)}
+.cube-btn:hover .cube-hover-label{opacity:1;transform:scale(1);pointer-events:auto}
+.cube-face{position:absolute;width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border:1.5px solid rgba(56,189,248,.6);background:rgba(4,8,15,.88);color:#38bdf8;border-radius:5px;text-shadow:0 0 8px rgba(56,189,248,.7)}
+.cube-front {transform:translateZ(23px)}
+.cube-back  {transform:rotateY(180deg)  translateZ(23px)}
+.cube-right {transform:rotateY(90deg)   translateZ(23px)}
+.cube-left  {transform:rotateY(-90deg)  translateZ(23px)}
+.cube-top   {transform:rotateX(90deg)   translateZ(23px)}
+.cube-bottom{transform:rotateX(-90deg)  translateZ(23px)}
+@keyframes cubeSequence{
+  0%,    2%    {transform:rotateX(0deg)   rotateY(0deg)}
+  16.67%,18.67%{transform:rotateX(0deg)   rotateY(-90deg)}
+  33.33%,35.33%{transform:rotateX(90deg)  rotateY(0deg)}
+  50%,   52%   {transform:rotateX(0deg)   rotateY(90deg)}
+  66.67%,68.67%{transform:rotateX(-90deg) rotateY(0deg)}
+  83.33%,85.33%{transform:rotateX(0deg)   rotateY(180deg)}
+  100%         {transform:rotateX(0deg)   rotateY(360deg)}
+}
 
 /* ── Embedded 3D scene ── */
 .n3d-canvas-wrap{position:relative;background:radial-gradient(ellipse at 40% 40%,#0a1526 0%,#04080f 65%);flex:1;overflow:hidden}

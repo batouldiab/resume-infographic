@@ -21,6 +21,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hdr-name{font-size:1.5rem;font-weight:900;color:var(--white);letter-spacing:-.02em;line-height:1;white-space:nowrap}
 .hdr-pronoun{font-size:.56rem;color:var(--muted);letter-spacing:.08em;margin-left:4px}
 .hdr-title{font-size:.58rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-top:3px;white-space:nowrap}
+.hdr-company{font-size:.52rem;color:var(--muted);letter-spacing:.06em;margin-top:4px;white-space:nowrap;font-style:italic}
 .hdiv{width:1px;height:38px;background:var(--border);flex-shrink:0}
 .chips{display:flex;gap:5px;align-items:center;flex:1;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:99px;font-size:.66rem;font-weight:600;border:1px solid;white-space:nowrap}
@@ -179,7 +180,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ═══════════════════════════════════════════════════════════
    RD&D GRID (extracted from inline so media queries can override)
    ═══════════════════════════════════════════════════════════ */
-.rdd-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;position:relative;align-items:stretch}
+.rdd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;position:relative;align-items:stretch}
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINTS
@@ -193,7 +194,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .right-col>.panel{flex:1 1 200px}
   .right-col>button.acc-card{flex:1 1 200px}
   .bottom{grid-template-columns:1fr 1fr}
-  .rdd-grid{grid-template-columns:repeat(3,1fr)}
 }
 
 /* ── Mobile: ≤ 768 px ── */
@@ -213,8 +213,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .right-col>button.acc-card{flex:1 1 160px}
   /* power cards → single column */
   .bottom{grid-template-columns:1fr;margin-top:6px}
-  /* RD&D → 2 columns */
-  .rdd-grid{grid-template-columns:repeat(2,1fr)}
   /* timeline: scroll horizontally so all 9 entries stay legible */
   #tlContainer{overflow-x:auto;-webkit-overflow-scrolling:touch}
   #tlContainer>div{min-width:640px}
@@ -234,8 +232,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .music-vol{width:36px}
   /* right-col children each full-width */
   .right-col>.panel,.right-col>button.acc-card{flex:1 1 100%}
-  /* RD&D → single column */
-  .rdd-grid{grid-template-columns:1fr}
   /* power cards */
   .ptitle{font-size:.88rem}
   .pbody{font-size:.7rem}

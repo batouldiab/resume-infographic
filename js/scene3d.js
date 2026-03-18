@@ -47,7 +47,7 @@ scene.fog=new THREE.FogExp2(0x04080f,0.032);
 const camera=new THREE.PerspectiveCamera(48,1,0.1,200);
 camera.position.set(7.5,5,9.5);
 const controls=new THREE.OrbitControls(camera,renderer.domElement);
-controls.enableDamping=true;controls.dampingFactor=0.06;controls.minDistance=3;controls.maxDistance=32;controls.autoRotate=false;controls.autoRotateSpeed=0.45;
+controls.enableDamping=true;controls.dampingFactor=0.06;controls.minDistance=3;controls.maxDistance=32;controls.autoRotate=true;controls.autoRotateSpeed=1.2;
 scene.add(new THREE.AmbientLight(0x182040,1.5));
 const dL1=new THREE.DirectionalLight(0x00d4aa,0.9);dL1.position.set(6,10,6);scene.add(dL1);
 const dL2=new THREE.DirectionalLight(0xffc93c,0.45);dL2.position.set(-6,4,-6);scene.add(dL2);
@@ -95,7 +95,7 @@ document.getElementById('n3dBtnSide').onclick=()=>toCam(new THREE.Vector3(13,0,0
 document.getElementById('n3dBtnFront').onclick=()=>toCam(new THREE.Vector3(0.001,0,13),RT.clone());
 document.getElementById('n3dBtnReset').onclick=()=>toCam(RP.clone(),RT.clone());
 const btnRot=document.getElementById('n3dBtnRotate');
-btnRot.onclick=function(){controls.autoRotate=!controls.autoRotate;this.classList.toggle('rot-on',controls.autoRotate);this.textContent=controls.autoRotate?'⏹ Stop Rotate':'⟳ Auto-Rotate';};
+btnRot.classList.add('rot-on');btnRot.textContent='⏹ Stop Rotate';btnRot.onclick=function(){controls.autoRotate=!controls.autoRotate;this.classList.toggle('rot-on',controls.autoRotate);this.textContent=controls.autoRotate?'⏹ Stop Rotate':'⟳ Auto-Rotate';};
 function zoomCamera(f){const dir=new THREE.Vector3();camera.getWorldDirection(dir);const dist=camera.position.distanceTo(controls.target),newPos=camera.position.clone().addScaledVector(dir,dist*(1-f));if(newPos.distanceTo(controls.target)<controls.minDistance||newPos.distanceTo(controls.target)>controls.maxDistance)return;toCam(newPos,controls.target.clone(),300);}
 document.getElementById('n3dBtnZoomIn').onclick=()=>zoomCamera(0.75);
 document.getElementById('n3dBtnZoomOut').onclick=()=>zoomCamera(1.33);

@@ -92,14 +92,39 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
   poly.setAttribute('fill','rgba(0,212,170,.1)');poly.setAttribute('stroke','rgba(0,212,170,.3)');poly.setAttribute('stroke-width','1');svg.appendChild(poly);
 
+  // radar tip card helpers
+  const _rtt=document.getElementById('gtooltip');
+  function showRadarTip(dotEl,label,color){
+    const ttL=_rtt.querySelector('.tt-label'),ttB=_rtt.querySelector('.tt-body');
+    ttL.textContent=label;ttB.textContent='';
+    ttL.style.color=color;ttL.style.fontSize='1.05rem';ttL.style.textTransform='none';
+    ttL.style.letterSpacing='0';ttL.style.marginBottom='0';
+    _rtt.style.borderColor=color+'44';
+    _rtt.style.boxShadow=`0 8px 32px rgba(0,0,0,.55),0 0 18px ${color}22`;
+    const r=dotEl.getBoundingClientRect(),tw=_rtt.offsetWidth||130,th=_rtt.offsetHeight||34;
+    let x=r.left+r.width/2-tw/2,y=r.top-th-10;
+    if(y<5)y=r.bottom+10;
+    if(x+tw>window.innerWidth-5)x=window.innerWidth-tw-5;
+    if(x<5)x=5;
+    _rtt.style.left=x+'px';_rtt.style.top=y+'px';
+    _rtt.classList.add('visible');
+  }
+  function hideRadarTip(){
+    const ttL=_rtt.querySelector('.tt-label');
+    ttL.style.fontSize='';ttL.style.textTransform='';ttL.style.letterSpacing='';ttL.style.marginBottom='';
+    hideTip();
+  }
+
   // dots + labels
   const dots=labels.map((lbl,i)=>{
     const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('r','3.5');svg.appendChild(c);
+    c.setAttribute('r','3.5');c.style.cursor='default';svg.appendChild(c);
+    c.addEventListener('mouseenter',()=>showRadarTip(c,lbl,c.getAttribute('fill')||'#00d4aa'));
+    c.addEventListener('mouseleave',hideRadarTip);
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
     const lx=cx+(R+13)*Math.cos(angs[i]),ly=cy+(R+13)*Math.sin(angs[i]);
     t.setAttribute('x',lx);t.setAttribute('y',ly+3);t.setAttribute('text-anchor','middle');
-    t.setAttribute('font-family',"'Exo 2',sans-serif");t.setAttribute('font-size','7');t.setAttribute('fill','#c8d8e8');t.textContent=lbl;svg.appendChild(t);
+    t.setAttribute('font-family',"'Exo 2',sans-serif");t.setAttribute('font-size','7');t.setAttribute('fill','#c8d8e8');t.setAttribute('pointer-events','none');t.textContent=lbl;svg.appendChild(t);
     return c;
   });
 
@@ -197,7 +222,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
      anchorId:5},
     {x:313, y:458, w:274, h:240, bc:'#ffc93c', icon:'🌍', title:'AI × Society',
      sub:"<a href='https://www.unescwa.org/' target='_blank' style='color:#6a7f95;text-decoration:underline'>UN ESCWA</a> — Geo-AI Pipelines for Policy",
-     body:'End-to-end pipelines (Python, Polars, LLMs, GNNs) processing <b>100s of TB of fragmented human capital &amp; intellectual capacities data</b> from regions-in-transition. Geo-enabled dashboards for policymakers. <b>The biggest AI challenge is data fragmentation — defragmenting it empowers policy at every scale.</b>',
+     body:'End-to-end pipelines (Python, Polars, LLMs, GNNs) processing <b>100s of TB of fragmented human capital &amp; intellectual capacities data</b> from regions-in-transition. Geo-enabled dashboards for policymakers. <b>The biggest AI challenge is data fragmentation — defragmenting it empowers policy at every scale.</b><br/><a class="rdd-link" href="https://skillsmonitorfigures.onrender.com/" target="_blank">↗ Dashboard A</a><a class="rdd-link" href="https://cities-skills-v2.streamlit.app/" target="_blank">↗ Dashboard B</a>',
      anchorId:20},
     {x:616, y:458, w:274, h:240, bc:'#38bdf8', icon:'⚙️', title:'AI × Deployment',
      sub:"<a href='https://skillsmonitorfigures.onrender.com/' target='_blank' style='color:#6a7f95;text-decoration:underline'>Production MLOps</a> + <a href='https://batouldiab.streamlit.app/' target='_blank' style='color:#6a7f95;text-decoration:underline'>RAG Chatbot</a> + <a href='https://cities-skills-v2.streamlit.app/' target='_blank' style='color:#6a7f95;text-decoration:underline'>Full-Stack</a>",
@@ -219,15 +244,34 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     dot.setAttribute('fill',card.bc);dot.setAttribute('opacity','.85');svg.appendChild(dot);
   });
 
+  const cardFOs=[];
   cards.forEach(card=>{
     const fo=document.createElementNS('http://www.w3.org/2000/svg','foreignObject');
-    fo.setAttribute('x',card.x);fo.setAttribute('y',card.y);fo.setAttribute('width',card.w);fo.setAttribute('height',card.h);
-    fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="background:rgba(6,10,20,.96);border:1px solid ${card.bc};border-top:2px solid ${card.bc};border-radius:9px;padding:11px 13px;height:100%;overflow:hidden;box-shadow:0 0 20px rgba(0,0,0,.6);font-family:'Exo 2',sans-serif">
+    fo.setAttribute('x',card.x);fo.setAttribute('y',card.y);fo.setAttribute('width',card.w);fo.setAttribute('height',900);
+    fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" style="background:rgba(6,10,20,.96);border:1px solid ${card.bc};border-top:2px solid ${card.bc};border-radius:9px;padding:11px 13px;box-shadow:0 0 20px rgba(0,0,0,.6);font-family:'Exo 2',sans-serif;display:inline-block;width:100%;box-sizing:border-box">
       <div style="font-size:16px;font-weight:800;color:${card.bc};margin-bottom:6px">${card.icon} ${card.title}</div>
       <div style="font-size:11.5px;font-weight:600;color:#6a7f95;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #0d2040">${card.sub}</div>
       <div style="font-size:12.5px;color:#8a9fb8;line-height:1.7">${card.body}</div>
     </div>`;
     svg.appendChild(fo);
+    cardFOs.push({fo,cardY:card.y});
+  });
+
+  requestAnimationFrame(()=>{
+    let maxH=0;
+    cardFOs.forEach(({fo})=>{
+      const div=fo.querySelector('div');
+      if(div && div.scrollHeight+2>maxH) maxH=div.scrollHeight+2;
+    });
+    let maxBottom=H;
+    cardFOs.forEach(({fo,cardY})=>{
+      fo.setAttribute('height',maxH);
+      const div=fo.querySelector('div');
+      if(div) div.style.height=maxH+'px';
+      const bottom=cardY+maxH;
+      if(bottom>maxBottom) maxBottom=bottom;
+    });
+    if(maxBottom>H) svg.setAttribute('viewBox',`0 0 ${W} ${maxBottom+20}`);
   });
 
   nodes.forEach(n=>{

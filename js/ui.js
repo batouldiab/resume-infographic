@@ -26,7 +26,7 @@ function hideTip(){
 }
 
 /* --- Gallery carousel --- */
-const _galleryImgs = ['media/teaching1.jpg','media/teaching2.jpg','media/teaching3.jpg'];
+const _galleryImgs = ['media/teaching1.webp','media/teaching2.webp','media/teaching3.webp'];
 let _galIdx = 0;
 function openGallery(){
   _galIdx = 0;
@@ -43,6 +43,9 @@ function _galRender(){
   img.onload = function(){ img.style.opacity = '1'; };
   img.src = src;
   document.querySelectorAll('.gm-dot').forEach((d,i)=>d.classList.toggle('active',i===_galIdx));
+  // preload neighbours
+  [(_galIdx+1)%_galleryImgs.length, (_galIdx-1+_galleryImgs.length)%_galleryImgs.length]
+    .forEach(i=>{ new Image().src = _galleryImgs[i]; });
 }
 function galPrev(){_galIdx=(_galIdx-1+_galleryImgs.length)%_galleryImgs.length;_galRender();}
 function galNext(){_galIdx=(_galIdx+1)%_galleryImgs.length;_galRender();}
@@ -55,7 +58,7 @@ document.addEventListener('keydown',function(e){
 });
 
 /* --- Drawings gallery carousel --- */
-const _drawImgs = ['media/drawing1.jpg','media/drawing2.jpg','media/drawing3.jpg','media/drawing4.jpg'];
+const _drawImgs = ['media/drawing1.webp','media/drawing2.webp','media/drawing3.webp','media/drawing4.webp'];
 let _drawIdx = 0;
 function openDrawingsGallery(){
   _drawIdx = 0;
@@ -72,6 +75,9 @@ function _drawRender(){
   img.onload = function(){ img.style.opacity = '1'; };
   img.src = src;
   document.querySelectorAll('.dm-dot').forEach((d,i)=>d.classList.toggle('active',i===_drawIdx));
+  // preload neighbours
+  [(_drawIdx+1)%_drawImgs.length, (_drawIdx-1+_drawImgs.length)%_drawImgs.length]
+    .forEach(i=>{ new Image().src = _drawImgs[i]; });
 }
 function drawPrev(){_drawIdx=(_drawIdx-1+_drawImgs.length)%_drawImgs.length;_drawRender();}
 function drawNext(){_drawIdx=(_drawIdx+1)%_drawImgs.length;_drawRender();}
@@ -101,6 +107,9 @@ function _volGalRender() {
   img.style.opacity = '0';
   img.onload = function(){ img.style.opacity = '1'; };
   img.src = src;
+  // preload neighbours
+  [(_volGalIdx+1)%_volGalImgs.length, (_volGalIdx-1+_volGalImgs.length)%_volGalImgs.length]
+    .forEach(i=>{ new Image().src = _volGalImgs[i]; });
   var dotsEl = document.getElementById('volGalDots');
   dotsEl.innerHTML = '';
   _volGalImgs.forEach(function(_, i) {
@@ -127,13 +136,13 @@ var _accData = {
     title: 'Volunteering & Certifications',
     color: '#00d4aa',
     items: [
-      {dot:'#00d4aa', html:'🏅 Judge — <a href="https://www.robogeex.com/ai-challenge-2025" target="_blank">AI Challenge 2025: AI for Well-Being</a>', photos:['media/ai_judge.jpg']},
-      {dot:'#00d4aa', html:'⚙️ Team Coach — <a href="https://arclebanon.org/" target="_blank">Annual Robotics Competition — Lebanon 2025</a>', photos:['media/arc1.jpg','media/arc2.jpg']},
-      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2025</a>', photos:['media/wro2025_1.jpg','media/wro2025_2.jpg']},
-      {dot:'#00d4aa', html:'🤖 Team Coach (3 teams) — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2024</a>', photos:['media/wro2024_1.jpg','media/wro2024_2.jpg','media/wro2024_3.jpg','media/wro2024_4.jpg']},
-      {dot:'#00d4aa', html:'🔬 Team Coach — <a href="https://ifia.com/lebanon-nasr/" target="_blank">National Science Competition — Lebanon 2024</a>', photos:['media/nsc1.jpg','media/nsc2.jpg']},
-      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://ictd-lb.com/?page=item&ItemId=292" target="_blank">National Robotics Competition — Lebanon 2024</a>', photos:['media/nrc_1.jpg','media/nrc_2.jpg']},
-      {dot:'#00d4aa', html:'🖥️ Member — <a href="https://scsl.org.lb/" target="_blank">Syndicate of Computer Sciences in Lebanon</a> (Beirut)', photos:['media/syndicate1.jpg','media/syndicate2.png','media/syndicate3.jpg']},
+      {dot:'#00d4aa', html:'🏅 Judge — <a href="https://www.robogeex.com/ai-challenge-2025" target="_blank">AI Challenge 2025: AI for Well-Being</a>', photos:['media/ai_judge.webp']},
+      {dot:'#00d4aa', html:'⚙️ Team Coach — <a href="https://arclebanon.org/" target="_blank">Annual Robotics Competition — Lebanon 2025</a>', photos:['media/arc1.webp','media/arc2.webp']},
+      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2025</a>', photos:['media/wro2025_1.webp','media/wro2025_2.webp']},
+      {dot:'#00d4aa', html:'🤖 Team Coach (3 teams) — <a href="https://wro-association.org/" target="_blank">World Robot Olympiad 2024</a>', photos:['media/wro2024_1.webp','media/wro2024_2.webp','media/wro2024_3.webp','media/wro2024_4.webp']},
+      {dot:'#00d4aa', html:'🔬 Team Coach — <a href="https://ifia.com/lebanon-nasr/" target="_blank">National Science Competition — Lebanon 2024</a>', photos:['media/nsc1.webp','media/nsc2.webp']},
+      {dot:'#00d4aa', html:'🤖 Team Coach — <a href="https://ictd-lb.com/?page=item&ItemId=292" target="_blank">National Robotics Competition — Lebanon 2024</a>', photos:['media/nrc_1.webp','media/nrc_2.webp']},
+      {dot:'#00d4aa', html:'🖥️ Member — <a href="https://scsl.org.lb/" target="_blank">Syndicate of Computer Sciences in Lebanon</a> (Beirut)', photos:['media/syndicate1.webp','media/syndicate2.webp','media/syndicate3.webp']},
       {dot:'#00d4aa', html:'📜 Certificate — <a href="https://learningnetwork.cisco.com/s/ccna" target="_blank">CCNA Routing &amp; Switching: Introduction to Networks</a> · Cisco'},
       {dot:'#00d4aa', html:'🎤 Conference Presenter — <em>Data Acquisition &amp; Preprocessing: Brain Imaging Data as an Example</em> · <a href="https://www.facebook.com/Ektidar.Center/" target="_blank">Ektidar</a> Medical Research Applications'},
       {dot:'#00d4aa', html:'🌍 Volunteer — Leading Migration Statistics for People Impacted during the 2024 War on Lebanon'}

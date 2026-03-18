@@ -29,9 +29,16 @@ document.getElementById('net3dModal').addEventListener('click', function(e) { if
 /* ── Music Player ── */
 var _music = document.getElementById('bgMusic');
 var _musicPlaying = false;
-var _activeTrack = 'media/meditation.mp3';
+var _activeTrack = 'media/meditation.mp3'; // always stored as .mp3 base path
+// Detect Opus support once — serve .opus to modern browsers, .mp3 as fallback
+var _supportsOpus = (function(){
+  var a = document.createElement('audio');
+  var t = a.canPlayType('audio/ogg; codecs=opus');
+  return t === 'probably' || t === 'maybe';
+})();
+function _toOpus(src){ return _supportsOpus ? src.replace('.mp3','.opus') : src; }
 // src is intentionally NOT set here — load lazily on first play to avoid
-// downloading 9 MB on page load. preload="none" in HTML is also required.
+// downloading audio on page load. preload="none" in HTML is also required.
 
 // Show ⏳ while the browser is buffering, restore ⏸ once playing resumes
 _music.addEventListener('waiting', function() {
@@ -60,7 +67,7 @@ function switchTrack(src, label) {
     _musicPlaying = false;
   }
   _activeTrack = src;
-  _music.src = src;
+  _music.src = _toOpus(src);
   _updateTrackButtons(src);
   if (wasPlaying) toggleMusic();
 }
@@ -74,7 +81,7 @@ function toggleMusic() {
   } else {
     // Lazy-load: set src only on first play (avoids page-load network fetch)
     if (!_music.src || _music.src === window.location.href) {
-      _music.src = _activeTrack;
+      _music.src = _toOpus(_activeTrack);
     }
     var btn = document.getElementById('musicPlayBtn');
     btn.textContent = '⏳';

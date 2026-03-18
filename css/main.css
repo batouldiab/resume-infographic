@@ -29,20 +29,20 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .ct{background:rgba(0,212,170,.09);border-color:rgba(0,212,170,.3);color:var(--teal)}
 .cg{background:rgba(255,201,60,.07);border-color:rgba(255,201,60,.25);color:var(--gold)}
 .cv{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.25);color:var(--violet)}
-.music-player{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:.66rem;font-weight:600;border:1px solid rgba(0,212,170,.35);background:rgba(0,212,170,.08);color:var(--teal);white-space:nowrap;flex:0 0 auto}
-.music-btn{background:none;border:none;cursor:pointer;color:var(--teal);font-size:.85rem;padding:0;line-height:1;display:flex;align-items:center;transition:transform .15s,color .15s}
-.music-btn:hover{color:#00ffd0;transform:scale(1.2)}
-.music-vol{-webkit-appearance:none;appearance:none;flex:1;min-width:30px;height:3px;border-radius:2px;background:rgba(0,212,170,.25);outline:none;cursor:pointer}
-.music-vol::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:10px;height:10px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 4px rgba(0,212,170,.6)}
-.music-vol::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--teal);cursor:pointer;border:none}
-.music-eq{display:flex;align-items:flex-end;gap:1.5px;height:10px;opacity:0}
-.music-eq span{width:2px;border-radius:1px;background:var(--teal);animation:eq 0.8s ease-in-out infinite alternate}
-.music-eq span:nth-child(1){height:4px;animation-delay:0s}
-.music-eq span:nth-child(2){height:7px;animation-delay:.15s}
-.music-eq span:nth-child(3){height:5px;animation-delay:.3s}
-.music-eq span:nth-child(4){height:9px;animation-delay:.1s}
-.music-eq.active{opacity:1}
-@keyframes eq{to{height:3px}}
+.music-player{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:12px;border:1px solid rgba(0,212,170,.35);background:rgba(0,212,170,.06);white-space:nowrap;flex:0 0 auto}
+.music-btn{width:22px;height:22px;border-radius:50%;background:var(--teal);border:none;color:#04080f;font-size:.58rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s,background .15s;line-height:1;padding:0}
+.music-btn:hover{background:#00ffd0;transform:scale(1.08)}
+.wa-body{display:flex;flex-direction:column;gap:2px;min-width:130px}
+.wa-waveform{display:flex;align-items:center;gap:1.5px;height:16px;cursor:pointer;width:100%}
+.wa-bar{flex:1;background:rgba(0,212,170,.22);border-radius:1px;min-height:3px;transition:background .08s}
+.wa-bar.played{background:var(--teal)}
+.wa-meta{display:flex;align-items:center;justify-content:space-between;gap:4px}
+.wa-time{font-family:'JetBrains Mono',monospace;font-size:.44rem;color:var(--muted);flex-shrink:0}
+.wa-tracks{display:flex;gap:3px}
+.wa-tracks button{background:none;border:1px solid rgba(0,212,170,.25);border-radius:99px;color:#5c7080;font-size:.52rem;font-weight:600;padding:1px 8px;cursor:pointer;transition:all .15s;line-height:1.4;font-family:inherit;white-space:nowrap}
+.wa-tracks button.active{background:rgba(0,212,170,.18);border-color:rgba(0,212,170,.55);color:var(--teal)}
+.wa-speed{font-size:.46rem;font-weight:700;color:var(--teal);background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35);border-radius:4px;padding:1px 5px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:background .15s;flex-shrink:0;line-height:1.4}
+.wa-speed:hover{background:rgba(0,212,170,.25)}
 @keyframes radarBlink{0%,100%{opacity:1;r:5}50%{opacity:.35;r:3}}
 @keyframes roboGlow{0%,100%{filter:drop-shadow(0 0 8px #00d4aa) drop-shadow(0 0 16px #00d4aa)}50%{filter:drop-shadow(0 0 2px #00d4aa) drop-shadow(0 0 4px #00d4aa)}}.stats{display:flex;gap:5px;flex-shrink:0}
 .sp{text-align:center;padding:4px 9px;border-radius:7px;background:var(--card);border:1px solid var(--border)}
@@ -235,7 +235,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .hdr-name{font-size:.95rem}
   .chips{gap:3px}
   .chip{font-size:.6rem;padding:2px 6px}
-  .music-vol{width:36px}
+  .wa-body{min-width:100px}
   /* right-col children each full-width */
   .right-col>.panel,.right-col>button.acc-card{flex:1 1 100%}
   /* power cards */

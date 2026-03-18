@@ -29,7 +29,8 @@ document.getElementById('net3dModal').addEventListener('click', function(e) { if
 /* ── Music Player ── */
 var _music = document.getElementById('bgMusic');
 var _musicPlaying = false;
-var _activeTrack = 'media/meditation.mp3'; // always stored as .mp3 base path
+var _activeTrack = 'media/meditation.mp3';
+
 // Detect Opus support once — serve .opus to modern browsers, .mp3 as fallback
 var _supportsOpus = (function(){
   var a = document.createElement('audio');
@@ -37,10 +38,7 @@ var _supportsOpus = (function(){
   return t === 'probably' || t === 'maybe';
 })();
 function _toOpus(src){ return _supportsOpus ? src.replace('.mp3','.opus') : src; }
-// src is intentionally NOT set here — load lazily on first play to avoid
-// downloading audio on page load. preload="none" in HTML is also required.
 
-// Show ⏳ while the browser is buffering, restore ⏸ once playing resumes
 _music.addEventListener('waiting', function() {
   if (_musicPlaying) document.getElementById('musicPlayBtn').textContent = '⏳';
 });
@@ -50,25 +48,23 @@ _music.addEventListener('playing', function() {
 
 function _updateTrackButtons(src) {
   var isMed = src === 'media/meditation.mp3';
-  document.getElementById('trackMeditate').style.background    = isMed  ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackMeditate').style.color         = isMed  ? 'var(--teal)' : '#a8bfd4';
-  document.getElementById('trackMeditate').style.borderColor   = isMed  ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
-  document.getElementById('trackVoice').style.background       = !isMed ? 'rgba(0,212,170,.2)' : 'none';
-  document.getElementById('trackVoice').style.color            = !isMed ? 'var(--teal)' : '#a8bfd4';
-  document.getElementById('trackVoice').style.borderColor      = !isMed ? 'rgba(0,212,170,.5)' : 'rgba(0,212,170,.2)';
+  document.getElementById('trackMeditate').classList.toggle('active', isMed);
+  document.getElementById('trackVoice').classList.toggle('active', !isMed);
 }
+_updateTrackButtons(_activeTrack);
 
 function switchTrack(src, label) {
   var wasPlaying = _musicPlaying;
   if (_musicPlaying) {
     _music.pause();
     document.getElementById('musicPlayBtn').textContent = '▶';
-    document.getElementById('musicEq').classList.remove('active');
     _musicPlaying = false;
   }
   _activeTrack = src;
   _music.src = _toOpus(src);
   _updateTrackButtons(src);
+  document.getElementById('waTime').textContent = '0:00';
+  document.querySelectorAll('#waWaveform .wa-bar').forEach(function(b){ b.classList.remove('played'); });
   if (wasPlaying) toggleMusic();
 }
 
@@ -76,19 +72,15 @@ function toggleMusic() {
   if (_musicPlaying) {
     _music.pause();
     document.getElementById('musicPlayBtn').textContent = '▶';
-    document.getElementById('musicEq').classList.remove('active');
     _musicPlaying = false;
   } else {
-    // Lazy-load: set src only on first play (avoids page-load network fetch)
     if (!_music.src || _music.src === window.location.href) {
       _music.src = _toOpus(_activeTrack);
     }
     var btn = document.getElementById('musicPlayBtn');
     btn.textContent = '⏳';
-    _music.volume = parseFloat(document.getElementById('musicVol').value);
     _music.play().then(function(){
       btn.textContent = '⏸';
-      document.getElementById('musicEq').classList.add('active');
       _musicPlaying = true;
     }).catch(function(e){
       btn.textContent = '▶';
@@ -97,6 +89,46 @@ function toggleMusic() {
   }
 }
 
-function setVolume(v) {
-  _music.volume = parseFloat(v);
+/* ── Waveform ── */
+var _waveHeights = [4,7,11,15,8,19,13,21,17,10,22,18,14,20,16,9,19,14,11,17,12,21,8,15,10,14,7,12,5,9];
+var _waWaveform = document.getElementById('waWaveform');
+_waveHeights.forEach(function(h) {
+  var bar = document.createElement('div');
+  bar.className = 'wa-bar';
+  bar.style.height = h + 'px';
+  _waWaveform.appendChild(bar);
+});
+
+function _formatTime(s) {
+  s = Math.floor(s || 0);
+  return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+}
+
+function _updateWaveform() {
+  var bars = _waWaveform.querySelectorAll('.wa-bar');
+  var ratio = _music.duration ? _music.currentTime / _music.duration : 0;
+  var played = Math.floor(ratio * bars.length);
+  bars.forEach(function(b, i) { b.classList.toggle('played', i < played); });
+  document.getElementById('waTime').textContent = _music.duration
+    ? _formatTime(_music.currentTime) + ' / ' + _formatTime(_music.duration)
+    : _formatTime(_music.currentTime);
+}
+
+_music.addEventListener('timeupdate', _updateWaveform);
+_music.addEventListener('loadedmetadata', _updateWaveform);
+
+_waWaveform.addEventListener('click', function(e) {
+  if (!_music.duration) return;
+  var rect = _waWaveform.getBoundingClientRect();
+  _music.currentTime = ((e.clientX - rect.left) / rect.width) * _music.duration;
+});
+
+/* ── Playback speed ── */
+var _speeds = [1, 1.5, 2];
+var _speedIdx = 0;
+function cycleSpeed() {
+  _speedIdx = (_speedIdx + 1) % _speeds.length;
+  var s = _speeds[_speedIdx];
+  _music.playbackRate = s;
+  document.getElementById('musicSpeed').textContent = s + '\xd7';
 }

@@ -33,14 +33,21 @@
   </div>
   <!-- MUSIC PLAYER -->
   <audio id="bgMusic" loop preload="none"></audio>
-  <div class="music-player">
-    <button class="music-btn" id="musicPlayBtn" title="Play" onclick="toggleMusic()">▶</button>
-    <div class="music-eq" id="musicEq"><span></span><span></span><span></span><span></span></div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <button onclick="switchTrack('media/meditation.mp3','☯ Meditate')" id="trackMeditate" style="background:rgba(0,212,170,.2);border:1px solid rgba(0,212,170,.5);border-radius:99px;color:var(--teal);font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:700">☯ Meditate</button>
-      <button onclick="switchTrack('media/audio_english.mp3','🎙 Voice Over')" id="trackVoice" style="background:none;border:1px solid rgba(0,212,170,.2);border-radius:99px;color:#5c7080;font-size:.55rem;padding:1px 7px;cursor:pointer;font-weight:600">🎙 Voice Over</button>
+  <div style="display:flex;flex-direction:column;align-items:stretch;gap:3px;flex-shrink:0">
+    <div class="wa-tracks">
+      <button id="trackMeditate" onclick="switchTrack('media/meditation.mp3','☯ Meditate')" title="Meditate">☯ Meditate</button>
+      <button id="trackVoice" onclick="switchTrack('media/audio_english.mp3','🎙 Audio CV Summary')" title="Audio CV Summary">🎙 Audio CV Summary</button>
     </div>
-    <input class="music-vol" id="musicVol" type="range" min="0" max="1" step="0.02" value="0.5" title="Volume" oninput="setVolume(this.value)">
+    <div class="music-player">
+      <button class="music-btn" id="musicPlayBtn" title="Play" onclick="toggleMusic()">▶</button>
+      <div class="wa-body">
+        <div class="wa-waveform" id="waWaveform"></div>
+        <div class="wa-meta">
+          <span class="wa-time" id="waTime">0:00</span>
+        </div>
+      </div>
+      <button class="wa-speed" id="musicSpeed" onclick="cycleSpeed()">1×</button>
+    </div>
   </div>
   <div class="hdiv"></div>
   <div class="stats">

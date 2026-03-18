@@ -14,7 +14,7 @@ const NODES=[
   {id:9, label:'LangChain',          r:0.43,x:2.5,  y:2.0,  z:2.0,  color:'#7dd3fc',          cat:'NLP / AI Layer',  tip:'LLM orchestration framework — production RAG chatbot architecture.'},
   {id:10,label:'RAG',                r:0.44,x:3.0,  y:1.5,  z:2.5,  color:'#38bdf8',          cat:'NLP / AI Layer',  tip:'Retrieval-Augmented Generation — Next.js + LangChain + OpenAI production chatbot.'},
   {id:11,label:'HuggingFace',        r:0.44,x:2.0,  y:2.5,  z:2.0,  color:'#7dd3fc',          cat:'NLP / AI Layer',  tip:'Pre-trained transformer models — fine-tuning & embeddings.'},
-  {id:13,label:'GPT/Gemini\n/Fanar', r:0.56,x:3.5,  y:3.0,  z:3.0,  color:'#7dd3fc',          cat:'NLP / AI Layer',  tip:'GPT (OpenAI) production RAG; Gemini + Fanar (Arabic LLM) — multilingual NLP at UN ESCWA.'},
+  {id:13,label:'GPT/Gemini\n/Fanar', r:0.56,x:3.5,  y:3.0,  z:3.0,  color:'#7dd3fc',          cat:'NLP / AI Layer',  tip:'GPT (OpenAI) production RAG; Gemini + Fanar (Arabic LLM) — multilingual NLP at United Nations.'},
   {id:20,label:'Data\nEng',          r:0.47,x:-2.0, y:1.0,  z:-2.0, color:'#ffc93c',          cat:'Data Engineering',tip:'100s of TB fragmented human capital data — cleaned, structured, mart-ready.'},
   {id:21,label:'Polars/\nPandas',    r:0.46,x:-3.0, y:0.0,  z:-2.0, color:'#fde68a',          cat:'Data Engineering',tip:'High-performance Python dataframe libraries for large-scale pipelines.'},
   {id:22,label:'SQL/\nMongoDB',      r:0.46,x:-3.0, y:-0.5, z:-1.5, color:'#fde68a',          cat:'Data Engineering',tip:'Relational (SQL/MySQL/SQLite) and NoSQL (MongoDB) data modelling.'},
@@ -24,7 +24,7 @@ const NODES=[
   {id:17,label:'CI / CD',            r:0.38,x:1.5,  y:-3.0, z:0.5,  color:'#c4b5fd',          cat:'MLOps / Infra',   tip:'Continuous Integration/Deployment via GitHub Actions.'},
   {id:18,label:'DVC',                r:0.34,x:1.5,  y:-2.0, z:2.0,  color:'#c4b5fd',          cat:'MLOps / Infra',   tip:'Data Version Control — tracks datasets & models like Git.'},
   {id:19,label:'FastAPI/\nFlask',    r:0.44,x:2.5,  y:-1.5, z:1.5,  color:'#c4b5fd',          cat:'MLOps / Infra',   tip:'Python REST API frameworks for serving ML models in production.'},
-  {id:23,label:'GIS/GEE',            r:0.40,x:0.0,  y:2.5,  z:2.0,  color:'#fb923c',          cat:'Application Layer',tip:'Google Earth Engine — geospatial ETL, city-scale dashboards for UN ESCWA.'},
+  {id:23,label:'GIS/GEE',            r:0.40,x:0.0,  y:2.5,  z:2.0,  color:'#fb923c',          cat:'Application Layer',tip:'Google Earth Engine — geospatial ETL, city-scale dashboards for United Nations.'},
   {id:24,label:'React/\nNext.js',    r:0.46,x:3.5,  y:-0.5, z:2.0,  color:'#ff5f6d',          cat:'Application Layer',tip:'ReactJS dashboards + Next.js RAG chatbot frontend.'},
   {id:25,label:'TypeScript',         r:0.42,x:4.0,  y:-1.0, z:2.5,  color:'#fca5a5',          cat:'Application Layer',tip:'Strongly-typed JS — GOVA Group backend services.'},
 ];

@@ -186,7 +186,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     {id:14,shape:'circle',l:'MLOps',           r:27, x:388, y:378, c:'#a78bfa', tip:'End-to-end production ML pipeline management.'},
     {id:16,shape:'circle',l:'AWS',             r:26, x:505, y:398, c:'#a78bfa', tip:'Amazon Web Services: EC2, S3, ECR, IAM — cloud-native ML deployment.'},
     {id:20,shape:'circle',l:'Data\nEng',        r:27, x:298, y:76,  c:'#ffc93c', tip:'100s of TB fragmented human capital data — cleaned, structured, mart-ready.'},
-    {id:23,shape:'circle',l:'GIS/GEE',         r:24, x:560, y:156, c:'#fb923c', tip:'Google Earth Engine — geospatial ETL, city-scale dashboards for UN ESCWA.'},
+    {id:23,shape:'circle',l:'GIS/GEE',         r:24, x:560, y:156, c:'#fb923c', tip:'(Geographic Information Systems / Google Earth Engine) — geospatial ETL (Extract, Transform, Load), city-scale dashboards for United Nations.'},
     {id:2, shape:'rect',  l:'TensorFlow',      rw:48,rh:20, x:188, y:273, c:'#86efac', tip:'Deep learning framework — brain age & bioinformatics models.'},
     {id:3, shape:'rect',  l:'PyTorch',         rw:38,rh:20, x:212, y:343, c:'#86efac', tip:'Custom neural network architectures and research experimentation.'},
     {id:4, shape:'rect',  l:'scikit-learn',    rw:50,rh:20, x:300, y:396, c:'#86efac', tip:'Classical ML: regression, classification, clustering, evaluation.'},
@@ -198,7 +198,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     {id:11,shape:'rect',  l:'HuggingFace',     rw:52,rh:20, x:658, y:223, c:'#7dd3fc', tip:'Pre-trained transformer models — fine-tuning & embeddings.'},
     {id:24,shape:'rect',  l:'React / Next.js', rw:58,rh:20, x:658, y:313, c:'#ff5f6d', tip:'ReactJS dashboards + Next.js RAG chatbot frontend.'},
     {id:19,shape:'rect',  l:'FastAPI / Flask', rw:58,rh:20, x:658, y:370, c:'#c4b5fd', tip:'Python REST API frameworks for serving ML models in production.'},
-    {id:13,shape:'rect',  l:'GPT / Gemini / Fanar',  rw:74,rh:20, x:792, y:168, c:'#7dd3fc', tip:'GPT (OpenAI) integrated into production RAG pipeline; Gemini (Google) + Fanar (Arabic LLM) — multilingual NLP at UN ESCWA.'},
+    {id:13,shape:'rect',  l:'GPT / Gemini / Fanar',  rw:74,rh:20, x:792, y:168, c:'#7dd3fc', tip:'GPT (OpenAI) integrated into production RAG pipeline; Gemini (Google) + Fanar (Arabic LLM) — multilingual NLP at United Nations.'},
     {id:25,shape:'rect',  l:'TypeScript',      rw:50,rh:20, x:792, y:263, c:'#fca5a5', tip:'Strongly-typed JS — GOVA Group backend services.'},
     {id:17,shape:'rect',  l:'CI / CD',         rw:34,rh:20, x:792, y:318, c:'#c4b5fd', tip:'Continuous Integration/Deployment via GitHub Actions.'},
     {id:15,shape:'rect',  l:'MLflow',          rw:38,rh:20, x:200, y:423, c:'#c4b5fd', tip:'Experiment tracking, model versioning, deployment lifecycle.'},
@@ -242,7 +242,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
      body:'Multi-atlas ensemble fusing <b>GCNs with functional MRI (fMRI) regression</b> to predict biological brain age — a marker for Alzheimer\'s. <b>Domain knowledge + deep learning = results neither achieves alone.</b>',
      anchorId:5},
     {x:313, y:458, w:274, h:240, bc:'#ffc93c', icon:'🌍', title:'AI × Society',
-     sub:"<a href='https://www.unescwa.org/' target='_blank' style='color:#6a7f95;text-decoration:underline'>UN ESCWA</a> — Geo-AI Pipelines for Policy",
+     sub:"<a href='https://www.unescwa.org/' target='_blank' style='color:#6a7f95;text-decoration:underline'>United Nations</a> — Geo-AI Pipelines for Policy",
      body:'End-to-end pipelines (Python, Polars, LLMs, GNNs) processing <b>100s of TB of fragmented human capital &amp; intellectual capacities data</b> from regions-in-transition. Geo-enabled dashboards for policymakers. <b>The biggest AI challenge is data fragmentation — defragmenting it empowers policy at every scale.</b><br/><a class="rdd-link" href="https://skillsmonitorfigures.onrender.com/" target="_blank">↗ Dashboard A</a><a class="rdd-link" href="https://cities-skills-v2.streamlit.app/" target="_blank">↗ Dashboard B</a>',
      anchorId:20},
     {x:616, y:458, w:274, h:240, bc:'#38bdf8', icon:'⚙️', title:'AI × Deployment',
@@ -378,7 +378,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
     {yr:'Jan 2023+',role:'Full-Stack Dev',org:'GOVA Group',link:'https://gova-group.com/',c:'#ff5f6d',tip:'Lab, Financial & HR systems. ReactJS + TypeScript + MySQL.'},
     {yr:'Jan 2024–Aug 2025',role:'STEAM Tutor',org:'Adv. Tech Innov.',link:'https://www.linkedin.com/company/aticenter',c:'#fb923c',tip:'Robotics, AI tools & 3D-printing for children. Girls education.'},
     {yr:'Jul 2024+',role:'ML/Python Tutor',org:'Ghobeiry VTC',link:'https://www.ghobeiry.gov.lb/',c:'#f472b6',tip:'Python, ML & Prompt Engineering. Women in AI. Responsible AI.'},
-    {yr:'Oct–Dec 2025',role:'ML Engineer (Consultant)',org:'UN ESCWA',link:'https://www.unescwa.org/',c:'#00d4aa',tip:'100s TB human capital pipelines, Geo-AI dashboards, GNN forecasting, LLM-NLP (Gemini/Fanar).'},
+    {yr:'Oct–Dec 2025',role:'ML Engineer (Consultant)',org:'United Nations',link:'https://www.unescwa.org/',c:'#00d4aa',tip:'100s TB human capital pipelines, Geo-AI dashboards, GNN forecasting, LLM-NLP (Gemini/Fanar).'},
   ];
   const tl=document.getElementById('tlContainer');
   const gc=jobs.map(j=>j.c).join(',');

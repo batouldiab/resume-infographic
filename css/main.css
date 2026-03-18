@@ -277,7 +277,7 @@ a.gallery-link:hover{background:rgba(255,201,60,.15)}
 
 /* ── 3D Cube Button ── */
 .cube-btn{display:inline-grid;place-items:center;cursor:pointer;perspective:160px;flex-shrink:0;vertical-align:middle;margin-left:10px}
-.cube-inner{grid-area:1/1;width:46px;height:46px;position:relative;transform-style:preserve-3d;animation:cubeSequence 24s cubic-bezier(0.45,0,0.55,1) infinite;transition:opacity .4s ease,transform .4s ease}
+.cube-inner{grid-area:1/1;width:46px;height:46px;position:relative;transform-style:preserve-3d;animation:cubeSequence 12s cubic-bezier(0.45,0,0.55,1) infinite;transition:opacity .4s ease,transform .4s ease}
 .cube-hover-label{grid-area:1/1;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid rgba(56,189,248,.65);background:rgba(56,189,248,.11);color:#38bdf8;white-space:nowrap;text-shadow:0 0 8px rgba(56,189,248,.5);opacity:0;transform:scale(0.8);pointer-events:none;transition:opacity .4s ease,transform .4s ease}
 .cube-btn:hover .cube-inner{opacity:0;transform:scale(0.6)}
 .cube-btn:hover .cube-hover-label{opacity:1;transform:scale(1);pointer-events:auto}

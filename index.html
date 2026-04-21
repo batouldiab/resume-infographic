@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Batoul Diab - Data Engineering Scientist</title>
+<title>Batoul Diab — AI / ML Scientist</title>
+<meta name="description" content="Batoul Diab — AI / ML Scientist. Interactive infographic resume showcasing expertise in deep learning, NLP, geospatial AI, and data engineering.">
+<meta property="og:title" content="Batoul Diab — AI / ML Scientist">
+<meta property="og:description" content="Interactive infographic resume: deep learning, NLP, GIS, UN data pipelines, brain neuroimaging AI.">
+<meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="media/logo.svg">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Exo+2:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 <!-- Preload critical images to eliminate first-open latency -->
 <link rel="preload" href="media/graduate.webp" as="image" type="image/webp">
@@ -19,13 +23,13 @@
 <!-- HEADER -->
 <div class="hdr">
   <div style="flex-shrink:0">
-    <div class="hdr-name">Batoul Diab <span class="hdr-pronoun">(her)</span></div>
+    <div class="hdr-name">Batoul Diab <span class="hdr-pronoun">(she/her)</span></div>
     <div class="hdr-title">Artificial Intelligence (AI) / <br/>Machine Learning (ML) Scientist</div>
     <div class="hdr-company"><a href="https://nexasee.com/" target="_blank">NexaSEE Technologies Production</a></div>
   </div>
   <div class="hdiv"></div>
   <div class="chips">
-    <span class="chip ct" id="emailChip" title="batouldiab@outlook.com" style="cursor:pointer" onclick="(function(el){navigator.clipboard.writeText('batouldiab@outlook.com').then(function(){var orig=el.textContent;el.textContent='Email Copied';setTimeout(function(){el.textContent=orig;},2000)}).catch(function(){window.location.href='mailto:batouldiab@outlook.com'});})(this)">✉ batouldiab@outlook.com ⧉</span>
+    <span class="chip ct" id="emailChip" title="batouldiab@outlook.com" style="cursor:pointer" onclick="copyEmail(this)">✉ batouldiab@outlook.com ⧉</span>
     <a class="chip ct" href="https://www.linkedin.com/in/batoul96diab/" target="_blank">⬡ LinkedIn</a>
     <a class="chip" href="https://batouldiab.streamlit.app/" target="_blank" style="background:rgba(0,212,170,.15);border-color:rgba(0,212,170,.6);color:#00d4aa;font-weight:700;box-shadow:0 0 10px rgba(0,212,170,.2)">🤖 AI Portfolio</a>
     <a class="chip cg" href="https://earth.google.com/web/search/Beirut/@33.8892183,35.5042823,69.79979647a,7719.09866755d,35y,0h,0t,0r/data=CnUaRxJBCiUweDE1MWYxNzIxNTg4MGE3OGY6MHg3MjkxODJiYWU5OTgzNmI0GYN52cBn8kBAIYkyCjg6wEFAKgZCZWlydXQYAiABIiYKJAlZxhMd-oItQBG-YBt2C7osQBnK0r4WUF9eQCHKqzwkICdeQEICCAE6AwoBMEICCABKDQj___________8BEAA" target="_blank" style="text-decoration:none">📍 Beirut, Lebanon</a>
@@ -33,7 +37,7 @@
   </div>
   <!-- MUSIC PLAYER -->
   <audio id="bgMusic" loop preload="none"></audio>
-  <div style="display:flex;flex-direction:column;align-items:stretch;gap:3px;flex-shrink:0">
+  <div class="audio-wrap" style="display:flex;flex-direction:column;align-items:stretch;gap:3px;flex-shrink:0">
     <div class="wa-tracks">
       <button id="trackMeditate" onclick="switchTrack('media/meditation.mp3','☯ Meditate')" title="Meditate">☯ Meditate</button>
       <button id="trackVoice" onclick="switchTrack('media/audio_english.mp3','🎙 Audio CV Summary')" title="Audio CV Summary">🎙 Audio CV Summary</button>
@@ -78,7 +82,7 @@
     <div class="gauge-stack" id="gaugeStack"></div>
     <div style="text-align:center;margin-top:10px">
       <a href="https://batouldiab.streamlit.app/" target="_blank" style="display:inline-block">
-        <img src="media/chatbot.webp" alt="AI Robot" style="width:100%;max-width:100%;height:auto;display:block;margin:0 auto 6px;animation:roboGlow 3s ease-in-out infinite;filter:brightness(0.35) opacity(0.75)">
+        <img src="media/chatbot.webp" alt="AI Robot" class="robo-img">
         <span style="font-size:.60rem;color:#00d4aa;font-weight:400;letter-spacing:.03em;text-decoration:underline;text-underline-offset:3px">Interview me via my AI version</span>
       </a>
     </div>
@@ -149,12 +153,12 @@
         <div class="ey">2020–2023 · Brain Age | GCN | Regression</div>
         <div class="ey" style="margin-top:1px"><a href="https://doi.org/10.5281/zenodo.18890505" target="_blank" style="color:var(--teal)">Thesis: Brain Age Prediction via Multi-Atlas Ensemble Deep Regression</a></div>
       </div>
-      <div class="edu-item" style="border-left-color:#a78bfa">
+      <div class="edu-item" style="border-color:rgba(167,139,250,.22);background:rgba(167,139,250,.04)">
         <div class="ed"><a href="https://faculty-science.com/computer-science/" target="_blank">M.S.-1 — Computer Science</a></div>
         <div class="eu" style="color:#a78bfa"><a href="https://ul.edu.lb/en/colleges-faculties-details/311/Faculty%20of%20Science" target="_blank">Lebanese University</a></div>
         <div class="ey">2017–2018</div>
       </div>
-      <div class="edu-item" style="border-left-color:#ffc93c">
+      <div class="edu-item" style="border-color:rgba(255,201,60,.22);background:rgba(255,201,60,.04)">
         <div class="ed"><a href="https://faculty-science.com/computer-science/" target="_blank">B.S. — Computer Science</a></div>
         <div class="eu" style="color:#ffc93c"><a href="https://ul.edu.lb/en/colleges-faculties-details/311/Faculty%20of%20Science" target="_blank">Lebanese University</a></div>
         <div class="ey">2014–2017</div>
@@ -202,7 +206,7 @@
     <!-- 01 AI for Socio-Economic Development -->
     <div class="rdd-item" style="--rc:#00d4aa;--ra:0,212,170;padding-left:0">
       <div class="rdd-dot" style="left:auto;right:auto;position:relative;top:auto;display:block;margin:0 auto 6px;width:10px;height:10px"></div>
-      <div class="rdd-card" style="border-left:none;border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
+      <div class="rdd-card" style="border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
         <div class="rdd-head">
           <span class="rdd-num">01</span>
           <span class="rdd-icon">📈</span>
@@ -222,7 +226,7 @@
     <!-- 02 Geo-AI -->
     <div class="rdd-item" style="--rc:#00d4aa;--ra:0,212,170;padding-left:0">
       <div class="rdd-dot" style="left:auto;right:auto;position:relative;top:auto;display:block;margin:0 auto 6px;width:10px;height:10px"></div>
-      <div class="rdd-card" style="border-left:none;border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
+      <div class="rdd-card" style="border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
         <div class="rdd-head">
           <span class="rdd-num">02</span>
           <span class="rdd-icon">🌍</span>
@@ -241,7 +245,7 @@
     <!-- 03 Brain Neuroimaging -->
     <div class="rdd-item" style="--rc:#a78bfa;--ra:167,139,250;padding-left:0">
       <div class="rdd-dot" style="left:auto;right:auto;position:relative;top:auto;display:block;margin:0 auto 6px;width:10px;height:10px"></div>
-      <div class="rdd-card" style="border-left:none;border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
+      <div class="rdd-card" style="border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
         <div class="rdd-head">
           <span class="rdd-num">03</span>
           <span class="rdd-icon">🧠</span>
@@ -257,7 +261,7 @@
     <!-- 04 Bioinformatics -->
     <div class="rdd-item" style="--rc:#ffc93c;--ra:255,201,60;padding-left:0">
       <div class="rdd-dot" style="left:auto;right:auto;position:relative;top:auto;display:block;margin:0 auto 6px;width:10px;height:10px"></div>
-      <div class="rdd-card" style="border-left:none;border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
+      <div class="rdd-card" style="border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
         <div class="rdd-head">
           <span class="rdd-num">04</span>
           <span class="rdd-icon">🔬</span>
@@ -273,7 +277,7 @@
     <!-- 05 StressLess -->
     <div class="rdd-item" style="--rc:#86efac;--ra:134,239,172;padding-left:0">
       <div class="rdd-dot" style="left:auto;right:auto;position:relative;top:auto;display:block;margin:0 auto 6px;width:10px;height:10px"></div>
-      <div class="rdd-card" style="border-left:none;border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
+      <div class="rdd-card" style="border-top:2px solid var(--rc);border-radius:0 0 7px 7px">
         <div class="rdd-head">
           <span class="rdd-num">05</span>
           <span class="rdd-icon">⌚</span>

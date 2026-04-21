@@ -47,13 +47,31 @@ function renderGauges(pct){
   skillNames.forEach((name,i)=>{
     const level=Math.round(skills2020[i]+(skills2026[i]-skills2020[i])*t);
     const col=gaugeColor(level),d=document.createElement('div');
-    d.className='gauge-item';d.style.borderLeft=`3px solid ${col}`;
+    d.className='gauge-item';d.style.borderColor=col+'33';d.style.boxShadow=`0 0 8px ${col}11`;
     d.innerHTML=`<div class="gauge-title">${name}</div>${makeGauge({name,level})}`;
     stack.appendChild(d);
   });
 }
 renderGauges(100);
-document.getElementById('gaugeSlider').addEventListener('input',function(){renderGauges(+this.value);});
+var _gaugePct = 100;
+var _gaugeRafId = null;
+function renderGaugesAnimated(target) {
+  if (_gaugeRafId) cancelAnimationFrame(_gaugeRafId);
+  var start = _gaugePct;
+  var delta = target - start;
+  var dur = 320;
+  var t0 = performance.now();
+  function step(ts) {
+    var p = Math.min((ts - t0) / dur, 1);
+    var ease = 1 - Math.pow(1 - p, 3);
+    _gaugePct = start + delta * ease;
+    renderGauges(_gaugePct);
+    if (p < 1) _gaugeRafId = requestAnimationFrame(step);
+    else _gaugePct = target;
+  }
+  _gaugeRafId = requestAnimationFrame(step);
+}
+document.getElementById('gaugeSlider').addEventListener('input',function(){renderGaugesAnimated(+this.value);});
 
 /* ─────────────────────────────────────────────────────────────
    SOFT SKILLS RADAR
@@ -368,7 +386,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
         clipPath.appendChild(clipCircle);defs.appendChild(clipPath);g.appendChild(defs);
         const bgCircle=document.createElementNS('http://www.w3.org/2000/svg','circle');
         bgCircle.setAttribute('cx','0');bgCircle.setAttribute('cy','0');bgCircle.setAttribute('r',n.r-2);
-        bgCircle.setAttribute('fill','#000000');g.appendChild(bgCircle);
+        bgCircle.setAttribute('fill','#04080f');g.appendChild(bgCircle);
         const img=document.createElementNS('http://www.w3.org/2000/svg','image');
         img.setAttribute('href','media/graduate.webp');
         img.setAttribute('x',-n.r+2);img.setAttribute('y',-n.r+2);
@@ -440,7 +458,7 @@ document.getElementById('gaugeSlider').addEventListener('input',function(){rende
   h+=`</div><div style="display:grid;grid-template-columns:repeat(${jobs.length},1fr);gap:0;margin-top:7px">`;
   jobs.forEach((j,i)=>{
     h+=`<div style="padding:0 3px;text-align:center;${i>0?'border-left:1px dashed #0d2040':''}">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:.49rem;color:#a8bfd4;margin-bottom:1px">${j.yr}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.49rem;color:#a8bfd4;margin-bottom:1px">${j.yr}</div>
       <div style="font-size:.57rem;font-weight:700;color:${j.c};line-height:1.2">${j.role}</div>
       <div style="font-size:.52rem;color:#a8bfd4">${j.link?`<a href="${j.link}" target="_blank" style="color:${j.c};text-decoration:none">${j.org}</a>`:j.org}</div>
     </div>`;

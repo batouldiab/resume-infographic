@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Batoul Diab — 3D Skill Universe</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Semi+Condensed:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -13,7 +13,7 @@
   --orange:#fb923c;--lime:#86efac;--coral:#ff5f6d;--pink:#fca5a5;
   --text:#c8d8e8;--muted:#a8bfd4;--white:#e8f4ff;
 }
-html,body{width:100%;min-height:100vh;background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+html,body{width:100%;min-height:100vh;background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:linear-gradient(rgba(0,212,170,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.014) 1px,transparent 1px);
   background-size:52px 52px}
@@ -27,21 +27,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .loader-ring{width:56px;height:56px;border:2px solid var(--border);border-top-color:var(--gold);
   border-radius:50%;animation:spin .9s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loader-text{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted);letter-spacing:.12em}
+.loader-text{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);letter-spacing:.12em}
 
 /* ─── HEADER ─── */
 .hdr{display:flex;align-items:center;gap:24px;flex-wrap:wrap;
   padding:20px 28px;background:var(--panel);border:1px solid var(--border);
   border-top:3px solid var(--gold);border-radius:14px;margin-bottom:16px;
   box-shadow:0 0 50px rgba(255,201,60,.05)}
-.hdr-name{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
+.hdr-name{font-family:'Barlow',sans-serif;font-size:2.1rem;font-weight:900;
   color:var(--white);line-height:1.1;letter-spacing:-.02em}
 .hdr-name em{color:var(--gold);font-style:normal}
 .hdr-role{font-size:.75rem;color:var(--muted);margin-top:5px;letter-spacing:.04em}
 .hdr-role strong{color:var(--teal)}
 .hdr-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .htag{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:99px;
-  font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;border:1px solid}
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;border:1px solid}
 .htag-gold{background:rgba(255,201,60,.07);border-color:rgba(255,201,60,.28);color:var(--gold)}
 .htag-teal{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.28);color:var(--teal)}
 .htag-violet{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.28);color:var(--violet)}
@@ -49,28 +49,28 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hdr-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .hdr-stat-row{display:flex;gap:12px}
 .hstat{text-align:center;padding:8px 14px;border-radius:9px;background:var(--card);border:1px solid var(--border)}
-.hstat .n{font-family:'DM Mono',monospace;font-size:1.35rem;font-weight:500;color:var(--gold);line-height:1}
+.hstat .n{font-family:'JetBrains Mono',monospace;font-size:1.35rem;font-weight:500;color:var(--gold);line-height:1}
 .hstat .l{font-size:.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
 /* ─── AXIS INFO ─── */
 .axis-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .axis-card{padding:13px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);
   display:flex;align-items:flex-start;gap:14px}
-.ax-letter{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:500;
+.ax-letter{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:500;
   flex-shrink:0;line-height:1;margin-top:2px}
 .ax-body strong{display:block;font-size:.72rem;color:var(--white);margin-bottom:4px}
 .ax-body span{font-size:.64rem;color:var(--muted);line-height:1.6}
 
 /* ─── KEY PROJECT CARDS ─── */
 .proj-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.proj-card{padding:14px 16px;border-radius:11px;background:var(--card);border:1px solid var(--border);
-  border-left:3px solid;position:relative;overflow:hidden;
+.proj-card{padding:14px 16px;border-radius:0 0 11px 11px;background:var(--card);border:1px solid var(--border);
+  border-top:3px solid;position:relative;overflow:hidden;
   transition:box-shadow .2s,border-color .2s}
 .proj-card:hover{box-shadow:0 0 22px rgba(var(--pcr),.2)}
 .proj-card::before{content:'';position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(var(--pcr),.04) 0%,transparent 60%);pointer-events:none}
 .proj-icon{font-size:1.3rem;margin-bottom:6px}
-.proj-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;
+.proj-title{font-family:'Barlow',sans-serif;font-size:.95rem;font-weight:700;
   color:var(--white);margin-bottom:5px}
 .proj-sub{font-size:.62rem;color:var(--muted);line-height:1.55;margin-bottom:7px}
 .proj-tags{display:flex;flex-wrap:wrap;gap:4px}
@@ -101,14 +101,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:rgba(11,17,32,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border);border-radius:99px;padding:6px 14px}
 .cbtn{background:none;border:1px solid var(--border);color:var(--muted);
-  font-size:.62rem;font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:.62rem;font-family:'Barlow',sans-serif;font-weight:600;
   padding:4px 13px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .cbtn:hover,.cbtn.on{background:rgba(255,201,60,.1);border-color:var(--gold);color:var(--gold)}
 .cbtn.rot-on{background:rgba(0,212,170,.1);border-color:var(--teal);color:var(--teal)}
 
 /* Axis overlays on canvas */
 .ax-ov{position:absolute;pointer-events:none;z-index:10;
-  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.06em;
   opacity:.65;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 
 /* ─── TOOLTIP ─── */
@@ -120,12 +120,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   opacity:0;transform:translateY(8px) scale(.96);
   transition:opacity .16s,transform .16s}
 #tt.vis{opacity:1;transform:translateY(0) scale(1)}
-.tt-name{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;
+.tt-name{font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:500;
   margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid var(--border)}
 .tt-desc{font-size:.67rem;color:var(--muted);line-height:1.65}
 .tt-badge{display:inline-block;margin-top:8px;font-size:.55rem;font-weight:600;
-  padding:2px 9px;border-radius:99px;border:1px solid;font-family:'DM Mono',monospace}
-.tt-coords{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);
+  padding:2px 9px;border-radius:99px;border:1px solid;font-family:'JetBrains Mono',monospace}
+.tt-coords{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--muted);
   margin-top:5px;opacity:.7}
 
 /* ─── LEGEND ─── */
@@ -224,7 +224,7 @@ body.modal-mode body{overflow:hidden}
 
   <!-- ═══ KEY PROJECTS ═══ -->
   <div class="proj-row">
-    <div class="proj-card" style="border-left-color:#a78bfa;--pc:#a78bfa;--pcr:167,139,250">
+    <div class="proj-card" style="border-top-color:#a78bfa;--pc:#a78bfa;--pcr:167,139,250">
       <div class="proj-icon">🧠</div>
       <div class="proj-title">AI × Health</div>
       <div class="proj-sub">Brain Age Prediction — Master's Thesis · Tarbiat Modares University.<br>Multi-atlas ensemble fusing GCNs with fMRI regression to predict biological brain age.</div>
@@ -232,7 +232,7 @@ body.modal-mode body{overflow:hidden}
         <span class="ptag">GNN/GCN</span><span class="ptag">TensorFlow</span><span class="ptag">PyTorch</span><span class="ptag">NLP</span>
       </div>
     </div>
-    <div class="proj-card" style="border-left-color:#ffc93c;--pc:#ffc93c;--pcr:255,201,60">
+    <div class="proj-card" style="border-top-color:#ffc93c;--pc:#ffc93c;--pcr:255,201,60">
       <div class="proj-icon">🌍</div>
       <div class="proj-title">AI × Society</div>
       <div class="proj-sub">United Nations — Geo-AI Pipelines for Policy.<br>End-to-end pipelines processing 100s of TB of fragmented human capital data.</div>
@@ -240,7 +240,7 @@ body.modal-mode body{overflow:hidden}
         <span class="ptag">Data Eng</span><span class="ptag">LLMs</span><span class="ptag">GIS/GEE</span><span class="ptag">GNN/GCN</span>
       </div>
     </div>
-    <div class="proj-card" style="border-left-color:#38bdf8;--pc:#38bdf8;--pcr:56,189,248">
+    <div class="proj-card" style="border-top-color:#38bdf8;--pc:#38bdf8;--pcr:56,189,248">
       <div class="proj-icon">⚙️</div>
       <div class="proj-title">AI × Deployment</div>
       <div class="proj-sub">Production MLOps + RAG Chatbot + Full-Stack.<br>Full production MLOps (MLflow, DVC, AWS, CI/CD) and a Next.js + LangChain RAG system.</div>
@@ -669,7 +669,7 @@ function makeLabel(text, color) {
   const c = document.createElement('canvas');
   c.width=W; c.height=H;
   const ctx = c.getContext('2d');
-  ctx.font = `600 ${lines.length>1?11:12}px "DM Sans",sans-serif`;
+  ctx.font = `600 ${lines.length>1?11:12}px "Barlow",sans-serif`;
   ctx.fillStyle = color;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';

@@ -15,14 +15,33 @@ document.addEventListener('keydown', function(e) {
 /* ── 3D Network modal ── */
 var _net3dLoaded = false;
 function openNet3d() {
-  document.getElementById('net3dModal').classList.add('open');
+  var modal = document.getElementById('net3dModal');
+  modal.style.opacity = '0';
+  modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      modal.style.transition = 'opacity .2s ease';
+      modal.style.opacity = '1';
+    });
+  });
+  modal.addEventListener('transitionend', function(){ modal.style.transition = ''; }, {once:true});
   if (!_net3dLoaded) { _net3dLoaded = true; init3DScene(); }
   else if (window._n3dOnResize) window._n3dOnResize();
 }
 function closeNet3d() {
-  document.getElementById('net3dModal').classList.remove('open');
-  document.body.style.overflow = '';
+  var modal = document.getElementById('net3dModal');
+  var inner = modal.querySelector('.n3d-inner');
+  if (inner) inner.classList.add('closing');
+  modal.style.transition = 'opacity .2s ease';
+  modal.style.opacity = '0';
+  modal.addEventListener('transitionend', function(){
+    modal.classList.remove('open');
+    modal.style.opacity = '';
+    modal.style.transition = '';
+    document.body.style.overflow = '';
+    if (inner) inner.classList.remove('closing');
+  }, {once:true});
 }
 document.getElementById('net3dModal').addEventListener('click', function(e) { if(e.target===this) closeNet3d(); });
 
